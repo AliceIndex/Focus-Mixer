@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnStart = document.getElementById('btn-start');
     const btnPause = document.getElementById('btn-pause');
     const btnReset = document.getElementById('btn-reset');
-    const themeToggleBtn = document.getElementById('theme-toggle');
 
     // カルーセル関連
     const slider = document.getElementById('mixer-slider');
@@ -328,19 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
 
     // ==========================================
-    // 6. テーマ切り替え
-    // ==========================================
-    themeToggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('light-mode');
-        const isLight = document.body.classList.contains('light-mode');
-        themeToggleBtn.textContent = isLight ? '🌙 Dark' : '☀️ Light';
-        localStorage.setItem('focusMixerTheme', isLight ? 'light' : 'dark');
-    });
-
-    updateDisplay();
-
-    // ==========================================
-    // 7. 規約用モーダル
+    // 6. 規約用モーダル
     // ==========================================
     // モーダルを開く
     btnOpenLegal.addEventListener('click', () => {
@@ -360,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 8. 指定したメッセージを画面右上に通知として表示
+    // 7. 指定したメッセージを画面右上に通知として表示
     // ==========================================
     function showToast(message) {
         const container = document.getElementById('toast-container');
