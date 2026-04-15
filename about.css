@@ -1,0 +1,59 @@
+/**
+ * Focus Mixer
+ * Copyright (c) 2026 AliceIndex. All rights reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ */
+
+/* aboutページ専用の微調整 */
+.about-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    line-height: 1.8;
+    color: var(--text-color);
+}
+
+.about-section {
+    background: var(--bg-color);
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.about-section h2 {
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.about-section h3 {
+    color: var(--text-color);
+    margin-top: 20px;
+    font-size: 1.1rem;
+}
+
+.about-section ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.back-nav {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.highlight {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+blockquote {
+    border-left: 4px solid var(--primary-color);
+    margin: 20px 0;
+    padding: 10px 20px;
+    background: rgba(100, 255, 218, 0.05);
+    font-style: italic;
+}
