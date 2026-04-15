@@ -298,7 +298,8 @@ input[type="range"] {
 
 .bottom-ad {
   padding: 20px;
-  display: flex;
+  /* display: flex; */
+  display: none;
   justify-content: center;
   background-color: var(--bg-color);
 }
