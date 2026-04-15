@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Focus Mixer - 集中空間ビルダー</title>
   <link rel="stylesheet" href="./style.css">
+  <link rel="icon" type="image/png" href="./assets/images/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
+  <link rel="shortcut icon" href="./assets/images/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+  <link rel="manifest" href="./assets/images/site.webmanifest" />
+  <script src="./script.js"></script>
 </head>
+
 <body>
   <header>
     <h1>Focus Mixer</h1>
+    <button id="theme-toggle" class="theme-btn">☀️ Light</button>
   </header>
 
   <div class="layout-wrapper">
@@ -24,6 +34,7 @@
           <button id="btn-start">Start</button>
           <button id="btn-pause">Pause</button>
           <button id="btn-reset">Reset</button>
+          <button id="settings-toggle" class="icon-btn">⚙️</button>
         </div>
       </section>
 
@@ -61,7 +72,41 @@
   </div>
 
   <div class="bottom-ad">
-     <div class="ad-placeholder">Ad Space (728x90 or 320x100)</div>
+    <div class="ad-placeholder">Ad Space (728x90 or 320x100)</div>
+  </div>
+  <div id="settings-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3>Timer Settings</h3>
+      <div class="settings-grid">
+        <div class="setting-group">
+          <label>集中時間:</label>
+          <div class="input-pair">
+            <input type="number" id="focus-min-input" min="0" max="99" value="25"> <span>分</span>
+            <input type="number" id="focus-sec-input" min="0" max="45" step="15" value="0"> <span>秒</span>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label>休憩時間:</label>
+          <div class="input-pair">
+            <input type="number" id="break-min-input" min="0" max="99" value="5"> <span>分</span>
+            <input type="number" id="break-sec-input" min="0" max="45" step="15" value="0"> <span>秒</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button id="btn-apply-settings" class="preset-btn">適用して閉じる</button>
+        <button id="btn-cancel-settings" class="preset-btn secondary">キャンセル</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="timer-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3 id="modal-title">Time's Up!</h3>
+      <p id="modal-message">お疲れ様です！休憩しましょう。</p>
+      <button id="modal-close-btn" class="preset-btn">閉じる</button>
+    </div>
   </div>
 </body>
+
 </html>
