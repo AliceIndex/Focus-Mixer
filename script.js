@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const soundFiles = {
         rain: './assets/sounds/rain.mp3',
         cafe: './assets/sounds/cafe.mp3',
-        keyboard: './assets/sounds/keyboard.mp3',
+        bonfire: './assets/sounds/bonfire.mp3',
         server: './assets/sounds/server.mp3'
     };
 
