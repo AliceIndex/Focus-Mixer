@@ -179,6 +179,24 @@ input[type="range"] {
   min-height: 90px;
 }
 
+/* フッターのスタイル */
+.app-footer {
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  text-decoration: underline;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
 /* レスポンシブ対応（画面幅が狭い場合） */
 @media (max-width: 950px) {
   .layout-wrapper {
@@ -301,4 +319,24 @@ header {
   flex-direction: column;
   gap: 15px;
   margin: 20px 0;
+}
+
+/* 規約モーダルのスクロール対応 */
+.legal-content {
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  text-align: left;
+  /* 規約は左寄せが読みやすい */
+}
+
+.legal-content h4 {
+  color: var(--primary-color);
+  margin: 15px 0 5px 0;
+}
+
+.legal-content p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
 }

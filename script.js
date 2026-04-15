@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const breakSecInput = document.getElementById('break-sec-input');
     const btnApply = document.getElementById('btn-apply-settings');
     const btnCancel = document.getElementById('btn-cancel-settings');
+    const legalModal = document.getElementById('legal-modal');
+    const btnOpenLegal = document.getElementById('btn-open-legal');
+    const btnCloseLegal = document.getElementById('btn-close-legal');
 
     // アラート音はシームレスループ不要なので、手軽なHTMLAudioElementのままでOK
     const bellSound = new Audio('./assets/sounds/bell.mp3');
@@ -243,4 +246,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     updateDisplay();
+
+    // ==========================================
+    // 7. 規約用モーダル
+    // ==========================================
+    // モーダルを開く
+    btnOpenLegal.addEventListener('click', () => {
+        legalModal.classList.remove('hidden');
+    });
+
+    // モーダルを閉じる
+    btnCloseLegal.addEventListener('click', () => {
+        legalModal.classList.add('hidden');
+    });
+
+    // 背景クリックで閉じる（おまけのUX向上）
+    legalModal.addEventListener('click', (e) => {
+        if (e.target === legalModal) {
+            legalModal.classList.add('hidden');
+        }
+    });
 });
