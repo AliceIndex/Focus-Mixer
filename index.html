@@ -88,15 +88,17 @@
         <div class="setting-group">
           <label>集中時間:</label>
           <div class="input-pair">
-            <input type="number" id="focus-min-input" min="0" max="99" value="25"> <span>分</span>
-            <input type="number" id="focus-sec-input" min="0" max="45" step="15" value="0"> <span>秒</span>
+            <input type="number" class="timer-input" id="focus-min-input" min="0" max="99" value="25"> <span>分</span>
+            <input type="number" class="timer-input" id="focus-sec-input" min="0" max="45" step="15" value="0">
+            <span>秒</span>
           </div>
         </div>
         <div class="setting-group">
           <label>休憩時間:</label>
           <div class="input-pair">
-            <input type="number" id="break-min-input" min="0" max="99" value="5"> <span>分</span>
-            <input type="number" id="break-sec-input" min="0" max="45" step="15" value="0"> <span>秒</span>
+            <input type="number" class="timer-input" id="break-min-input" min="0" max="99" value="5"> <span>分</span>
+            <input type="number" class="timer-input" id="break-sec-input" min="0" max="45" step="15" value="0">
+            <span>秒</span>
           </div>
         </div>
       </div>
@@ -124,19 +126,20 @@
     <div class="modal-content legal-content">
       <div id="legal-text-area">
         <h3>Privacy Policy & Info</h3>
-        <section>
+        <section class="legal-text-card">
           <h4>当サイトについて</h4>
-          <p>Focus Mixerは、集中力を高めるためのポモドーロタイマーと環境音ミキサーを提供しています。開発：AliceIndex</p>
+          <p>Focus Mixerは、集中力を高めるためのポモドーロタイマーと環境音ミキサーを提供しています。</p>
+          <p>開発：AliceIndex</p>
         </section>
-        <section>
+        <section class="legal-text-card">
           <h4>広告の配信について</h4>
           <p>当サイトでは、第三者配信の広告サービス「Google AdSense」を利用しています。広告配信事業者は、ユーザーの興味に応じた広告を表示するためにCookie（クッキー）を使用することがあります。</p>
         </section>
-        <section>
+        <section class="legal-text-card">
           <h4>免責事項</h4>
           <p>当サイトの利用により生じた損害等について、開発者は一切の責任を負いません。自己責任での利用をお願いいたします。</p>
         </section>
-        <section>
+        <section class="legal-text-card">
           <h4>お問い合わせ</h4>
           <p>ご意見・不具合報告は contact@focusmixer.com までお願いいたします。</p>
         </section>
