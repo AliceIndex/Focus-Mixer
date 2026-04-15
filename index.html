@@ -45,31 +45,42 @@
         </div>
       </section>
 
-      <section class="mixer-section">
-        <h2>Sound Mixer</h2>
-        <div class="sound-grid">
-          <div class="sound-item">
-            <label>🌧️ 雨の音</label>
-            <input type="range" min="0" max="100" value="0" class="volume-slider" data-sound="rain">
-          </div>
-          <div class="sound-item">
-            <label>☕ カフェ</label>
-            <input type="range" min="0" max="100" value="0" class="volume-slider" data-sound="cafe">
-          </div>
-          <div class="sound-item">
-            <label>🔥 焚き火</label>
-            <input type="range" min="0" max="100" value="0" class="volume-slider" data-sound="bonfire">
-          </div>
-          <div class="sound-item">
-            <label>🖥️ サーバー排気音</label>
-            <input type="range" min="0" max="100" value="0" class="volume-slider" data-sound="server">
-          </div>
+
+      <div class="mixer-viewport">
+        <div class="mixer-slider" id="mixer-slider">
+
+          <section class="sound-page">
+            <h2>Nature</h2>
+            <div class="sound-grid" id="grid-nature"></div>
+          </section>
+
+          <section class="sound-page">
+            <h2>Ambient & Tech</h2>
+            <div class="sound-grid" id="grid-tech"></div>
+          </section>
+
+          <section class="sound-page">
+            <h2>Focus</h2>
+            <div class="sound-grid" id="grid-focus"></div>
+          </section>
+
         </div>
-      </section>
+      </div>
+
+      <div class="slider-nav">
+        <button id="prev-page" class="nav-btn">←</button>
+        <div class="page-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <button id="next-page" class="nav-btn">→</button>
+      </div>
 
       <section class="preset-section">
-        <button id="btn-save" class="preset-btn">いつもの設定を保存</button>
-        <button id="btn-load" class="preset-btn">設定を読み込む</button>
+        <button id="btn-save" class="preset-btn">保存</button>
+        <button id="btn-load" class="preset-btn">読込</button>
+        <button id="btn-mute-all" class="preset-btn danger-btn">全ミュート</button>
       </section>
     </main>
 

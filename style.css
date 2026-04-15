@@ -121,11 +121,75 @@ h2 {
   font-weight: bold;
 }
 
-/* サウンドミキサー */
-.sound-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 25px;
+.danger-btn {
+  background-color: rgba(255, 82, 82, 0.15);
+  /* 控えめな赤色 */
+  border: 1px solid #ff5252;
+  color: #ff5252;
+}
+
+.danger-btn:hover {
+  background-color: #ff5252;
+  color: #fff;
+}
+
+.mixer-viewport {
+  width: 100%;
+  max-width: 400px;
+  /* 1ページ分の幅 */
+  margin: 0 auto;
+  overflow: hidden;
+  /* はみ出た分を隠す */
+  position: relative;
+}
+
+.mixer-slider {
+  display: flex;
+  width: 300%;
+  /* 3ページ分なので300% */
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  /* 滑らかな加速・減速 */
+}
+
+.sound-page {
+  width: 33.333%;
+  /* 1ページは全体の3分の1 */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.sound-page h2 {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+/* ナビゲーション周り */
+.nav-btn {
+  color: var(--text-main);
+  background: none;
+}
+
+.slider-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+.dot.active {
+  background: var(--primary-color);
+  transform: scale(1.3);
 }
 
 .sound-item {

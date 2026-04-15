@@ -7,78 +7,190 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ==========================================
-    // 1. グローバル変数 ＆ DOM要素の取得
+    // 1. 定数・データ定義（12音源・3カテゴリ）
+    // ==========================================
+    const SOUND_LIST = [
+        // Page 1: Nature
+        { id: 'rain', label: '雨音', icon: '🌧️', file: 'rain.mp3', category: 'nature' },
+        { id: 'bonfire', label: '焚き火', icon: '🔥', file: 'bonfire.mp3', category: 'nature' },
+        { id: 'waves', label: '波打ち際', icon: '🌊', file: 'waves.mp3', category: 'nature' },
+        { id: 'birds', label: '小鳥', icon: '🐦', file: 'birds.mp3', category: 'nature' },
+        // Page 2: Ambient & Tech
+        { id: 'server', label: 'サーバー室', icon: '🖥️', file: 'server.mp3', category: 'tech' },
+        { id: 'cafe', label: 'カフェ', icon: '☕', file: 'cafe.mp3', category: 'tech' },
+        { id: 'train', label: '電車内', icon: '🚃', file: 'train.mp3', category: 'tech' },
+        { id: 'fan', label: '換気扇', icon: '🌀', file: 'fan.mp3', category: 'tech' },
+        // Page 3: Focus
+        { id: 'white', label: 'White', icon: '⚪', file: 'white.mp3', category: 'focus' },
+        { id: 'pink', label: 'Pink', icon: '🌸', file: 'pink.mp3', category: 'focus' },
+        { id: 'brown', label: 'Brown', icon: '🟤', file: 'brown.mp3', category: 'focus' },
+        { id: 'clock', label: '時計', icon: '⏱️', file: 'clock.mp3', category: 'focus' }
+    ];
+
+    // ==========================================
+    // 2. グローバル変数 ＆ DOM要素
     // ==========================================
     let focusTotalSeconds = 25 * 60;
     let breakTotalSeconds = 5 * 60;
     let timeLeft = focusTotalSeconds;
     let timerInterval = null;
     let isFocusMode = true;
+    let currentPage = 0;
 
     const timeDisplay = document.getElementById('time-display');
     const modeDisplay = document.getElementById('timer-mode');
     const btnStart = document.getElementById('btn-start');
     const btnPause = document.getElementById('btn-pause');
     const btnReset = document.getElementById('btn-reset');
+    const themeToggleBtn = document.getElementById('theme-toggle');
 
-    // モーダル関連
+    // カルーセル関連
+    const slider = document.getElementById('mixer-slider');
+    const dots = document.querySelectorAll('.dot');
+    const btnPrev = document.getElementById('prev-page');
+    const btnNext = document.getElementById('next-page');
+
+    // モーダル・その他
     const settingsModal = document.getElementById('settings-modal');
-    const settingsToggle = document.getElementById('settings-toggle');
-    const focusMinInput = document.getElementById('focus-min-input');
-    const focusSecInput = document.getElementById('focus-sec-input');
-    const breakMinInput = document.getElementById('break-min-input');
-    const breakSecInput = document.getElementById('break-sec-input');
-    const btnApply = document.getElementById('btn-apply-settings');
-    const btnCancel = document.getElementById('btn-cancel-settings');
+    const timerModal = document.getElementById('timer-modal');
     const legalModal = document.getElementById('legal-modal');
     const btnOpenLegal = document.getElementById('btn-open-legal');
     const btnCloseLegal = document.getElementById('btn-close-legal');
-
-    // アラート音はシームレスループ不要なので、手軽なHTMLAudioElementのままでOK
     const bellSound = new Audio('./assets/sounds/bell.mp3');
 
-    const timerModal = document.getElementById('timer-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalMessage = document.getElementById('modal-message');
-    const modalCloseBtn = document.getElementById('modal-close-btn');
-
-    const sliders = document.querySelectorAll('.volume-slider');
-    const soundFiles = {
-        rain: './assets/sounds/rain.mp3',
-        cafe: './assets/sounds/cafe.mp3',
-        bonfire: './assets/sounds/bonfire.mp3',
-        server: './assets/sounds/server.mp3'
-    };
-
-    const themeToggleBtn = document.getElementById('theme-toggle');
+    // Web Audio API
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const btnMuteAll = document.getElementById('btn-mute-all');
+    let audioCtx = null; // ユーザー操作まで未初期化
+    const audioBuffers = {};
+    const audioSources = {};
+    const gainNodes = {};
 
     // ==========================================
-    // 2. 初期ロード時の復元
+    // 3. UIの動的生成
     // ==========================================
-    const savedTheme = localStorage.getItem('focusMixerTheme');
-    if (savedTheme === 'light') {
-        document.body.classList.add('light-mode');
-        themeToggleBtn.textContent = '🌙 Dark';
+    function initMixerUI() {
+        SOUND_LIST.forEach(sound => {
+            const grid = document.getElementById(`grid-${sound.category}`);
+            if (!grid) return;
+
+            const item = document.createElement('div');
+            item.className = 'sound-item';
+            item.innerHTML = `
+                <div class="sound-icon">${sound.icon}</div>
+                <label>${sound.label}</label>
+                <input type="range" class="volume-slider" data-sound="${sound.id}" min="0" max="100" value="0">
+            `;
+            grid.appendChild(item);
+
+            // スライダーにイベント登録
+            const sliderInput = item.querySelector('input');
+            sliderInput.addEventListener('input', (e) => handleVolumeInput(e, sound.id));
+        });
     }
 
-    const savedTimer = localStorage.getItem('focusMixerTimer');
-    if (savedTimer) {
-        const config = JSON.parse(savedTimer);
-        focusTotalSeconds = config.focus || (25 * 60);
-        breakTotalSeconds = config.break || (5 * 60);
-        timeLeft = focusTotalSeconds;
+    // ==========================================
+    // 4. カルーセル（スライド）制御
+    // ==========================================
+    function updateSlider() {
+        const offset = currentPage * -33.3333; // 3ページなので
+        slider.style.transform = `translateX(${offset}%)`;
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentPage);
+        });
     }
 
+    btnNext.addEventListener('click', () => {
+        if (currentPage < 2) { currentPage++; updateSlider(); }
+    });
+
+    btnPrev.addEventListener('click', () => {
+        if (currentPage > 0) { currentPage--; updateSlider(); }
+    });
+
     // ==========================================
-    // 3. タイマー & 通知モーダル
+    // 5. 音響エンジン (Web Audio API)
+    // ==========================================
+    async function initAudio() {
+        if (audioCtx) return;
+        audioCtx = new AudioContext();
+
+        // 全音源を並列でプリロード
+        const loadPromises = SOUND_LIST.map(async (sound) => {
+            try {
+                const response = await fetch(`./assets/sounds/${sound.file}`);
+                const arrayBuffer = await response.arrayBuffer();
+                audioBuffers[sound.id] = await audioCtx.decodeAudioData(arrayBuffer);
+
+                const gainNode = audioCtx.createGain();
+                gainNode.gain.value = 0;
+                gainNode.connect(audioCtx.destination);
+                gainNodes[sound.id] = gainNode;
+            } catch (e) {
+                console.error(`音源ロード失敗: ${sound.id}`, e);
+            }
+        });
+        await Promise.all(loadPromises);
+    }
+
+    async function handleVolumeInput(e, id) {
+        if (!audioCtx) await initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const volume = e.target.value / 100;
+        if (!gainNodes[id]) return;
+
+        // ノイズ防止のため緩やかに音量変更
+        gainNodes[id].gain.setTargetAtTime(volume, audioCtx.currentTime, 0.05);
+
+        if (volume > 0 && !audioSources[id]) {
+            const source = audioCtx.createBufferSource();
+            source.buffer = audioBuffers[id];
+            source.loop = true;
+            source.connect(gainNodes[id]);
+            source.start(0);
+            audioSources[id] = source;
+        } else if (volume === 0 && audioSources[id]) {
+            audioSources[id].stop();
+            audioSources[id] = null;
+        }
+    }
+
+    btnMuteAll.addEventListener('click', () => {
+        SOUND_LIST.forEach(sound => {
+            const id = sound.id;
+
+            // 1. スライダーの表示を0にする
+            const input = document.querySelector(`input[data-sound="${id}"]`);
+            if (input) {
+                input.value = 0;
+            }
+
+            // 2. Web Audio APIの音量をフェードアウト（ノイズ防止）
+            if (gainNodes[id]) {
+                // 0.1秒かけて滑らかに消す
+                gainNodes[id].gain.setTargetAtTime(0, audioCtx.currentTime, 0.05);
+            }
+
+            // 3. 再生リソースを解放する
+            if (audioSources[id]) {
+                audioSources[id].stop();
+                audioSources[id] = null;
+            }
+        });
+    });
+
+    // ==========================================
+    // 6. タイマー・設定・保存（既存ロジック統合）
     // ==========================================
     function updateDisplay() {
         const minutes = Math.floor(timeLeft / 60);
         const seconds = timeLeft % 60;
         timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        document.title = `${timeDisplay.textContent} - Focus Mixer`;
     }
 
-    function startTimer() {
+    btnStart.addEventListener('click', () => {
         if (timerInterval) return;
         timerInterval = setInterval(() => {
             timeLeft--;
@@ -90,150 +202,94 @@ document.addEventListener('DOMContentLoaded', () => {
                 timeLeft = isFocusMode ? focusTotalSeconds : breakTotalSeconds;
                 modeDisplay.textContent = isFocusMode ? "Focus Time" : "Break Time";
                 updateDisplay();
-
-                bellSound.play().catch(e => console.log("音声再生エラー:", e));
-                modalTitle.textContent = isFocusMode ? "Focus Time!" : "Break Time!";
-                modalMessage.textContent = isFocusMode ? "休憩終了！集中しましょう！" : "お疲れ様です！休憩しましょう。";
+                bellSound.play();
                 timerModal.classList.remove('hidden');
             }
         }, 1000);
-    }
+    });
 
-    btnStart.addEventListener('click', startTimer);
     btnPause.addEventListener('click', () => { clearInterval(timerInterval); timerInterval = null; });
-    btnReset.addEventListener('click', resetTimer);
-    modalCloseBtn.addEventListener('click', () => timerModal.classList.add('hidden'));
 
-    function resetTimer() {
+    btnReset.addEventListener('click', () => {
         clearInterval(timerInterval);
         timerInterval = null;
         isFocusMode = true;
         timeLeft = focusTotalSeconds;
         modeDisplay.textContent = "Focus Time";
         updateDisplay();
-    }
-
-    // ==========================================
-    // 4. 設定モーダル
-    // ==========================================
-    settingsToggle.addEventListener('click', () => {
-        focusMinInput.value = Math.floor(focusTotalSeconds / 60);
-        focusSecInput.value = focusTotalSeconds % 60;
-        breakMinInput.value = Math.floor(breakTotalSeconds / 60);
-        breakSecInput.value = breakTotalSeconds % 60;
-        settingsModal.classList.remove('hidden');
     });
 
-    btnApply.addEventListener('click', () => {
-        const fMin = parseInt(focusMinInput.value) || 0;
-        const fSec = parseInt(focusSecInput.value) || 0;
-        const bMin = parseInt(breakMinInput.value) || 0;
-        const bSec = parseInt(breakSecInput.value) || 0;
-
-        focusTotalSeconds = (fMin * 60) + fSec;
-        breakTotalSeconds = (bMin * 60) + bSec;
-
-        localStorage.setItem('focusMixerTimer', JSON.stringify({ focus: focusTotalSeconds, break: breakTotalSeconds }));
-        resetTimer();
-        settingsModal.classList.add('hidden');
+    // 設定保存・読み込み
+    document.getElementById('btn-save').addEventListener('click', () => {
+        const preset = {};
+        document.querySelectorAll('.volume-slider').forEach(s => {
+            preset[s.dataset.sound] = s.value;
+        });
+        localStorage.setItem('focusMixerPreset', JSON.stringify(preset));
+        alert('ミキシング設定を保存しました');
     });
 
-    btnCancel.addEventListener('click', () => {
-        settingsModal.classList.add('hidden');
-    });
-
-    // ==========================================
-    // 5. 環境音ミキサー (Web Audio API) & 保存
-    // ==========================================
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    const audioCtx = new AudioContext();
-    const audioBuffers = {};
-    const audioSources = {}; // 再生中のSourceNodeを管理
-    const gainNodes = {};    // 音量制御用Node
-
-    // 音声ファイルをバッファとしてメモリに事前読み込み
-    async function preloadSounds() {
-        for (const [type, url] of Object.entries(soundFiles)) {
-            try {
-                const response = await fetch(url);
-                const arrayBuffer = await response.arrayBuffer();
-                audioBuffers[type] = await audioCtx.decodeAudioData(arrayBuffer);
-
-                // 各音源用のボリュームコントローラーを作成し、最終出力(destination)に接続
-                const gainNode = audioCtx.createGain();
-                gainNode.gain.value = 0;
-                gainNode.connect(audioCtx.destination);
-                gainNodes[type] = gainNode;
-            } catch (error) {
-                console.error(`${type}の音声読み込みに失敗しました:`, error);
-            }
+    document.getElementById('btn-load').addEventListener('click', async () => {
+        const saved = localStorage.getItem('focusMixerPreset');
+        if (!saved) {
+            alert('保存された設定が見つかりません');
+            return;
         }
-    }
-    preloadSounds();
 
-    // 再生用関数
-    function playSound(type) {
-        if (audioSources[type] || !audioBuffers[type]) return;
-
-        const source = audioCtx.createBufferSource();
-        source.buffer = audioBuffers[type];
-        source.loop = true; // メモリからの直接ループにより無音の隙間がゼロになります
-        source.connect(gainNodes[type]);
-        source.start(0);
-        audioSources[type] = source;
-    }
-
-    // 停止用関数
-    function stopSound(type) {
-        if (audioSources[type]) {
-            audioSources[type].stop();
-            audioSources[type].disconnect();
-            audioSources[type] = null;
+        // 1. ユーザーのクリック操作直後に AudioContext を確実に初期化・再開
+        if (!audioCtx) {
+            await initAudio(); // 音源のロードとコンテキスト作成
         }
-    }
+        if (audioCtx.state === 'suspended') {
+            await audioCtx.resume();
+        }
 
-    sliders.forEach(slider => {
-        slider.addEventListener('input', (e) => {
-            // ブラウザの自動再生ブロックを解除するため、ユーザー操作時にContextを起動
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+        const preset = JSON.parse(saved);
 
-            const type = e.target.dataset.sound;
-            const volume = e.target.value / 100;
+        // 2. 各音源の設定を復元
+        SOUND_LIST.forEach(sound => {
+            const volume = preset[sound.id];
+            if (volume !== undefined) {
+                // スライダーの見た目を更新
+                const input = document.querySelector(`input[data-sound="${sound.id}"]`);
+                if (input) {
+                    input.value = volume;
+                }
 
-            if (!gainNodes[type]) return;
-
-            // setTargetAtTimeを使うことで、音量を急に変更した際の「プチッ」というノイズを防ぐ
-            gainNodes[type].gain.setTargetAtTime(volume, audioCtx.currentTime, 0.05);
-
-            if (volume > 0 && !audioSources[type]) {
-                playSound(type);
-            } else if (volume === 0 && audioSources[type]) {
-                stopSound(type); // ボリューム0ならリソースを解放して軽くする
+                // 音量適用と再生開始ロジックを直接呼び出す
+                // dispatchEventを使わず、定義済みの handleVolumeInput を直接叩くのが確実です
+                applyVolumeFromPreset(sound.id, volume / 100);
             }
         });
     });
 
-    document.getElementById('btn-save').addEventListener('click', () => {
-        const preset = {};
-        sliders.forEach(s => preset[s.dataset.sound] = s.value);
-        localStorage.setItem('focusMixerPreset', JSON.stringify(preset));
-        alert('設定を保存しました');
-    });
+    /**
+     * プリセットからの適用専用関数
+     * handleVolumeInput と同様のロジックを、イベントオブジェクトなしで実行
+     */
+    function applyVolumeFromPreset(id, volume) {
+        if (!gainNodes[id]) return;
 
-    document.getElementById('btn-load').addEventListener('click', () => {
-        const saved = localStorage.getItem('focusMixerPreset');
-        if (saved) {
-            const preset = JSON.parse(saved);
-            sliders.forEach(s => {
-                if (preset[s.dataset.sound]) {
-                    s.value = preset[s.dataset.sound];
-                    s.dispatchEvent(new Event('input'));
-                }
-            });
+        // 音量の適用
+        gainNodes[id].gain.setTargetAtTime(volume, audioCtx.currentTime, 0.05);
+
+        // 再生状態の制御
+        if (volume > 0 && !audioSources[id]) {
+            const source = audioCtx.createBufferSource();
+            source.buffer = audioBuffers[id];
+            source.loop = true;
+            source.connect(gainNodes[id]);
+            source.start(0);
+            audioSources[id] = source;
+        } else if (volume === 0 && audioSources[id]) {
+            audioSources[id].stop();
+            audioSources[id] = null;
         }
-    });
+    }
+
+    // 初期化実行
+    initMixerUI();
+    updateDisplay();
 
     // ==========================================
     // 6. テーマ切り替え
