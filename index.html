@@ -1,1 +1,67 @@
-index.html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus Mixer - 集中空間ビルダー</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header>
+    <h1>Focus Mixer</h1>
+  </header>
+
+  <div class="layout-wrapper">
+    <aside class="ad-space left-ad">
+      <div class="ad-placeholder">Ad Space<br>(160x600)</div>
+    </aside>
+
+    <main class="main-content">
+      <section class="timer-section">
+        <h2 id="timer-mode">Focus Time</h2>
+        <div class="time-display" id="time-display">25:00</div>
+        <div class="timer-controls">
+          <button id="btn-start">Start</button>
+          <button id="btn-pause">Pause</button>
+          <button id="btn-reset">Reset</button>
+        </div>
+      </section>
+
+      <section class="mixer-section">
+        <h2>Sound Mixer</h2>
+        <div class="sound-grid">
+          <div class="sound-item">
+            <label>🌧️ 雨の音</label>
+            <input type="range" min="0" max="100" value="0" class="volume-slider" data-sound="rain">
+          </div>
+          <div class="sound-item">
+            <label>☕ カフェ</label>
+            <input type="range" min="0" max="100" value="0" class="volume-slider" data-sound="cafe">
+          </div>
+          <div class="sound-item">
+            <label>⌨️ タイピング</label>
+            <input type="range" min="0" max="100" value="0" class="volume-slider" data-sound="keyboard">
+          </div>
+          <div class="sound-item">
+            <label>🖥️ サーバー排気音</label>
+            <input type="range" min="0" max="100" value="0" class="volume-slider" data-sound="server">
+          </div>
+        </div>
+      </section>
+
+      <section class="preset-section">
+        <button id="btn-save" class="preset-btn">いつもの設定を保存</button>
+        <button id="btn-load" class="preset-btn">設定を読み込む</button>
+      </section>
+    </main>
+
+    <aside class="ad-space right-ad">
+      <div class="ad-placeholder">Ad Space<br>(160x600)</div>
+    </aside>
+  </div>
+
+  <div class="bottom-ad">
+     <div class="ad-placeholder">Ad Space (728x90 or 320x100)</div>
+  </div>
+</body>
+</html>
