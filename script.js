@@ -7,6 +7,33 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ==========================================
+    // 0. クッキー同意管理
+    // ==========================================
+    // --- クッキー同意管理 ---
+    const cookieBanner = document.getElementById('cookie-banner');
+    const btnAcceptCookie = document.getElementById('btn-accept-cookie');
+    const btnOpenLegalFromCookie = document.getElementById('btn-open-legal-from-cookie');
+    // 1. 同意状態の確認
+    const hasConsented = localStorage.getItem('cookie-consent');
+    if (!hasConsented) {
+        // 同意していなければバナーを表示（hiddenクラスを外す）
+        setTimeout(() => {
+            cookieBanner.classList.remove('hidden');
+        }, 1000); // ページロードから1秒後にふわっと出す
+    }
+    // 2. 「同意する」ボタンの処理
+    btnAcceptCookie.addEventListener('click', () => {
+        localStorage.setItem('cookie-consent', 'true');
+        cookieBanner.classList.add('hidden');
+        showToast('クッキーの使用に同意いただきました 🍪');
+    });
+
+    // 3. バナー内のリンクから規約モーダルを開く
+    btnOpenLegalFromCookie.addEventListener('click', () => {
+        legalModal.classList.remove('hidden');
+    });
+
+    // ==========================================
     // 1. 定数・データ定義（12音源・3カテゴリ）
     // ==========================================
     const SOUND_LIST = [
@@ -178,6 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 audioSources[id] = null;
             }
         });
+        showToast('すべての音をミュートしました 🔇');
     });
 
     // ==========================================
@@ -226,13 +254,13 @@ document.addEventListener('DOMContentLoaded', () => {
             preset[s.dataset.sound] = s.value;
         });
         localStorage.setItem('focusMixerPreset', JSON.stringify(preset));
-        alert('ミキシング設定を保存しました');
+        showToast('設定を保存しました 💾');
     });
 
     document.getElementById('btn-load').addEventListener('click', async () => {
         const saved = localStorage.getItem('focusMixerPreset');
         if (!saved) {
-            alert('保存された設定が見つかりません');
+            showToast('保存された設定がありません ⚠️');
             return;
         }
 
@@ -261,6 +289,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 applyVolumeFromPreset(sound.id, volume / 100);
             }
         });
+
+        showToast('設定を読み込みました 🎶');
     });
 
     /**
@@ -322,4 +352,21 @@ document.addEventListener('DOMContentLoaded', () => {
             legalModal.classList.add('hidden');
         }
     });
+
+    // ==========================================
+    // 8. 指定したメッセージを画面右上に通知として表示
+    // ==========================================
+    function showToast(message) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+
+        container.appendChild(toast);
+
+        // 3秒後に要素をDOMから完全に削除
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
 });

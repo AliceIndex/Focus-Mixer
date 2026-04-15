@@ -28,6 +28,8 @@
     <button id="theme-toggle" class="theme-btn">☀️ Light</button>
   </header>
 
+  <div id="toast-container" class="toast-container"></div>
+
   <div class="layout-wrapper">
     <aside class="ad-space left-ad">
       <div class="ad-placeholder">Ad Space<br>(160x600)</div>
@@ -46,35 +48,34 @@
       </section>
 
 
-      <div class="mixer-viewport">
+      <section class="mixer-viewport">
         <div class="mixer-slider" id="mixer-slider">
-
-          <section class="sound-page">
+          <div class="sound-page">
             <h2>Nature</h2>
             <div class="sound-grid" id="grid-nature"></div>
-          </section>
+          </div>
 
-          <section class="sound-page">
+          <div class="sound-page">
             <h2>Ambient & Tech</h2>
             <div class="sound-grid" id="grid-tech"></div>
-          </section>
+          </div>
 
-          <section class="sound-page">
+          <div class="sound-page">
             <h2>Focus</h2>
             <div class="sound-grid" id="grid-focus"></div>
-          </section>
-
+          </div>
         </div>
-      </div>
+
+      </section>
 
       <div class="slider-nav">
-        <button id="prev-page" class="nav-btn">←</button>
+        <button id="prev-page" class="nav-btn">◀</button>
         <div class="page-dots">
           <span class="dot active"></span>
           <span class="dot"></span>
           <span class="dot"></span>
         </div>
-        <button id="next-page" class="nav-btn">→</button>
+        <button id="next-page" class="nav-btn">▶</button>
       </div>
 
       <section class="preset-section">
@@ -144,11 +145,14 @@
         </section>
         <section class="legal-text-card">
           <h4>広告の配信について</h4>
-          <p>当サイトでは、第三者配信の広告サービス「Google AdSense」を利用しています。広告配信事業者は、ユーザーの興味に応じた広告を表示するためにCookie（クッキー）を使用することがあります。</p>
+          <p>当サイトでは、第三者配信の広告サービス「Google AdSense」を利用しています。</p>
+          <p>広告配信事業者は、ユーザーの興味に応じた広告を表示するためにCookie（クッキー）を使用することがあります。</p>
+          <p>ユーザーは広告設定でパーソナライズ広告を無効にできます。</p>
         </section>
         <section class="legal-text-card">
           <h4>免責事項</h4>
-          <p>当サイトの利用により生じた損害等について、開発者は一切の責任を負いません。自己責任での利用をお願いいたします。</p>
+          <p>当サイトの利用により生じた損害等について、開発者は一切の責任を負いません。</p>
+          <p>自己責任での利用をお願いいたします。</p>
         </section>
         <section class="legal-text-card">
           <h4>お問い合わせ</h4>
@@ -156,6 +160,17 @@
         </section>
       </div>
       <button id="btn-close-legal" class="preset-btn">閉じる</button>
+    </div>
+  </div>
+  <div id="cookie-banner" class="cookie-banner hidden">
+    <div class="cookie-content">
+      <p>
+        当サイトでは、サービスの向上および広告配信のためにクッキーを使用しています。
+        詳細は<button id="btn-open-legal-from-cookie" class="inline-link">プライバシーポリシー</button>をご確認ください。
+      </p>
+      <div class="cookie-actions">
+        <button id="btn-accept-cookie" class="preset-btn">同意する</button>
+      </div>
     </div>
   </div>
 </body>
