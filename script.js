@@ -1,3 +1,9 @@
+/**
+ * Focus Mixer
+ * Copyright (c) 2026 [あなたの名前]. All rights reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // ==========================================
@@ -24,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const breakSecInput = document.getElementById('break-sec-input');
     const btnApply = document.getElementById('btn-apply-settings');
     const btnCancel = document.getElementById('btn-cancel-settings');
-    
+
     // アラート音はシームレスループ不要なので、手軽なHTMLAudioElementのままでOK
     const bellSound = new Audio('./assets/sounds/bell.mp3');
 
@@ -164,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 再生用関数
     function playSound(type) {
-        if (audioSources[type] || !audioBuffers[type]) return; 
+        if (audioSources[type] || !audioBuffers[type]) return;
 
         const source = audioCtx.createBufferSource();
         source.buffer = audioBuffers[type];
