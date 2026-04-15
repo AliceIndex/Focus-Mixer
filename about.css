@@ -57,3 +57,11 @@ blockquote {
     background: rgba(100, 255, 218, 0.05);
     font-style: italic;
 }
+
+.about-section ul {
+    list-style: none;
+    /* マーカーを消す */
+    padding: 0;
+    /* デフォルトのインデントを消す */
+    margin: 0;
+}
