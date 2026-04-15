@@ -510,6 +510,48 @@ header {
   margin: 0;
 }
 
+/* 同意するボタン */
+.primary-btn {
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.3s;
+}
+
+.primary-btn:hover {
+  border-color: var(--bg-color);
+  color: var(--bg-color);
+  background: var(--primary-color);
+}
+
+/* 同意しないボタン */
+.secondary-btn {
+  background: transparent;
+  border: 1px solid var(--text-muted);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.3s;
+}
+
+.secondary-btn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+/* ボタン同士の余白 */
+.cookie-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
 .inline-link {
   background: none;
   border: none;

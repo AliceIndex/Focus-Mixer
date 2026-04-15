@@ -12,25 +12,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- クッキー同意管理 ---
     const cookieBanner = document.getElementById('cookie-banner');
     const btnAcceptCookie = document.getElementById('btn-accept-cookie');
-    const btnOpenLegalFromCookie = document.getElementById('btn-open-legal-from-cookie');
-    // 1. 同意状態の確認
-    const hasConsented = localStorage.getItem('cookie-consent');
-    if (!hasConsented) {
-        // 同意していなければバナーを表示（hiddenクラスを外す）
+    const btnDeclineCookie = document.getElementById('btn-decline-cookie');
+
+    // 1. 同意ステータスの確認
+    // 'accepted' または 'declined' が保存されていれば表示しない
+    const consentStatus = localStorage.getItem('cookie-consent');
+    if (!consentStatus) {
         setTimeout(() => {
             cookieBanner.classList.remove('hidden');
-        }, 1000); // ページロードから1秒後にふわっと出す
+        }, 1000);
     }
-    // 2. 「同意する」ボタンの処理
+
+    // 2. 「同意する」ボタン
     btnAcceptCookie.addEventListener('click', () => {
-        localStorage.setItem('cookie-consent', 'true');
+        localStorage.setItem('cookie-consent', 'accepted');
         cookieBanner.classList.add('hidden');
-        showToast('クッキーの使用に同意いただきました 🍪');
+        showToast('クッキーの使用に同意しました 🍪');
+        // ここでAdSenseのスクリプトをロードする等の処理を将来的に追加
     });
 
-    // 3. バナー内のリンクから規約モーダルを開く
-    btnOpenLegalFromCookie.addEventListener('click', () => {
-        legalModal.classList.remove('hidden');
+    // 3. 「同意しない」ボタン
+    btnDeclineCookie.addEventListener('click', () => {
+        localStorage.setItem('cookie-consent', 'declined');
+        cookieBanner.classList.add('hidden');
+        showToast('クッキーの使用を拒否しました 🛡️');
+        // 非同意の場合はパーソナライズ広告を無効にするなどの配慮を行う
     });
 
     // ==========================================
