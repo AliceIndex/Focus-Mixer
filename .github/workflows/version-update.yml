@@ -13,19 +13,21 @@ jobs:
 
       - name: Update changed files version
         run: |
-          # 1. 変更されたファイルのリストを取得
           CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
           VERSION=$(git rev-parse --short HEAD)
           
           echo "Changes detected in: $CHANGED_FILES"
 
-          # 2. style.css が変更されていたら HTML 内のクエリを更新
           if echo "$CHANGED_FILES" | grep -q "style.css"; then
             sed -i "s/style.css?v=[^\"]*/style.css?v=$VERSION/g" *.html
             echo "Updated style.css version in HTML files."
           fi
 
-          # 3. script.js が変更されていたら HTML 内のクエリを更新
+          if echo "$CHANGED_FILES" | grep -q "about.css"; then
+            sed -i "s/about.css?v=[^\"]*/about.css?v=$VERSION/g" *.html
+            echo "Updated about.css version in HTML files."
+          fi
+
           if echo "$CHANGED_FILES" | grep -q "script.js"; then
             sed -i "s/script.js?v=[^\"]*/script.js?v=$VERSION/g" *.html
             # script.js 本体の内部バージョンも更新してlocalStorageを制御
