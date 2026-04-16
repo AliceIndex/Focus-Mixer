@@ -19,19 +19,19 @@ jobs:
           echo "Changes detected in: $CHANGED_FILES"
 
           if echo "$CHANGED_FILES" | grep -q "style.css"; then
-            sed -i "s/style.css?v=[^\"]*/style.css?v=$VERSION/g" *.html
+            sed -i "s/style.css?v=[^\"]*/style.css?v=$VERSION/g" ./*.html
             echo "Updated style.css version in HTML files."
           fi
 
           if echo "$CHANGED_FILES" | grep -q "about.css"; then
-            sed -i "s/about.css?v=[^\"]*/about.css?v=$VERSION/g" *.html
+            sed -i "s/about.css?v=[^\"]*/about.css?v=$VERSION/g" ./*.html
             echo "Updated about.css version in HTML files."
           fi
 
           if echo "$CHANGED_FILES" | grep -q "script.js"; then
             sed -i "s/script.js?v=[^\"]*/script.js?v=$VERSION/g" *.html
             # script.js 本体の内部バージョンも更新してlocalStorageを制御
-            sed -i "s/const CURRENT_VERSION = '[^']*'/const CURRENT_VERSION = '$VERSION'/g" script.js
+            sed -i "s/const CURRENT_VERSION = '[^']*'/const CURRENT_VERSION = '$VERSION'/g" ./static/script/script.js
             echo "Updated script.js version and internal constant."
           fi
 
