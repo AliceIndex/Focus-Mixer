@@ -1,0 +1,42 @@
+name: Smart Cache Busting
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  versioning:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2 # 差分比較のために直近2つのコミットを取得
+
+      - name: Update changed files version
+        run: |
+          # 1. 変更されたファイルのリストを取得
+          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+          VERSION=$(git rev-parse --short HEAD)
+          
+          echo "Changes detected in: $CHANGED_FILES"
+
+          # 2. style.css が変更されていたら HTML 内のクエリを更新
+          if echo "$CHANGED_FILES" | grep -q "style.css"; then
+            sed -i "s/style.css?v=[^\"]*/style.css?v=$VERSION/g" *.html
+            echo "Updated style.css version in HTML files."
+          fi
+
+          # 3. script.js が変更されていたら HTML 内のクエリを更新
+          if echo "$CHANGED_FILES" | grep -q "script.js"; then
+            sed -i "s/script.js?v=[^\"]*/script.js?v=$VERSION/g" *.html
+            # script.js 本体の内部バージョンも更新してlocalStorageを制御
+            sed -i "s/const CURRENT_VERSION = '[^']*'/const CURRENT_VERSION = '$VERSION'/g" script.js
+            echo "Updated script.js version and internal constant."
+          fi
+
+      - name: Commit and Push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          # 差分がある場合のみコミット
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: smart versioning [$VERSION]" && git push)
