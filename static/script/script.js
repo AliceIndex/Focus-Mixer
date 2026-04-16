@@ -84,7 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // モーダル・その他
     const settingsModal = document.getElementById('settings-modal');
+    const btnSettingsOpen = document.getElementById('settings-toggle');
+    const btnApplySettings = document.getElementById('btn-apply-settings');
+    const btnCancelSettings = document.getElementById('btn-cancel-settings');
+    const focusMinInput = document.getElementById('focus-min-input');
+    const focusSecInput = document.getElementById('focus-sec-input');
+    const breakMinInput = document.getElementById('break-min-input');
+    const breakSecInput = document.getElementById('break-sec-input');
     const timerModal = document.getElementById('timer-modal');
+    const btnCloseTimer = document.getElementById('modal-close-btn');
+    const modalMessage = document.getElementById('modal-message');
     const legalModal = document.getElementById('legal-modal');
     const btnOpenLegal = document.getElementById('btn-open-legal');
     const btnCloseLegal = document.getElementById('btn-close-legal');
@@ -214,13 +223,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 6. タイマー・設定・保存（既存ロジック統合）
+    // 6. タイマー動作・時間設定モーダル
     // ==========================================
     function updateDisplay() {
         const minutes = Math.floor(timeLeft / 60);
         const seconds = timeLeft % 60;
         timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         document.title = `${timeDisplay.textContent} - Focus Mixer`;
+    }
+
+    function resetTimer() {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        isFocusMode = true;
+        timeLeft = focusTotalSeconds;
+        modeDisplay.textContent = "Focus Time";
+        updateDisplay();
     }
 
     btnStart.addEventListener('click', () => {
@@ -244,15 +262,43 @@ document.addEventListener('DOMContentLoaded', () => {
     btnPause.addEventListener('click', () => { clearInterval(timerInterval); timerInterval = null; });
 
     btnReset.addEventListener('click', () => {
-        clearInterval(timerInterval);
-        timerInterval = null;
-        isFocusMode = true;
-        timeLeft = focusTotalSeconds;
-        modeDisplay.textContent = "Focus Time";
-        updateDisplay();
+        resetTimer();
     });
 
-    // 設定保存・読み込み
+    btnSettingsOpen.addEventListener('click', () => {
+        focusMinInput.value = Math.floor(focusTotalSeconds / 60);
+        focusSecInput.value = focusTotalSeconds % 60;
+        breakMinInput.value = Math.floor(breakTotalSeconds / 60);
+        breakSecInput.value = breakTotalSeconds % 60;
+        settingsModal.classList.remove('hidden');
+    });
+
+    btnApplySettings.addEventListener('click', () => {
+        const fMin = parseInt(focusMinInput.value) || 0;
+        const fSec = parseInt(focusSecInput.value) || 0;
+        const bMin = parseInt(breakMinInput.value) || 0;
+        const bSec = parseInt(breakSecInput.value) || 0;
+
+        focusTotalSeconds = (fMin * 60) + fSec;
+        breakTotalSeconds = (bMin * 60) + bSec;
+
+        localStorage.setItem('focusMixerTimer', JSON.stringify({ focus: focusTotalSeconds, break: breakTotalSeconds }));
+        resetTimer();
+        settingsModal.classList.add('hidden');
+    });
+
+    btnCancelSettings.addEventListener('click', () => {
+        settingsModal.classList.add('hidden');
+    });
+
+    btnCloseTimer.addEventListener('click', () => {
+        modalMessage.textContent = !isFocusMode ? "さあ！集中しましょう。" : "お疲れ様です！休憩しましょう。";
+        timerModal.classList.add('hidden');
+    });
+
+    // ==========================================
+    // 7. ユーザー設定の保存・読込
+    // ==========================================
     document.getElementById('btn-save').addEventListener('click', () => {
         const preset = {};
         document.querySelectorAll('.volume-slider').forEach(s => {
@@ -327,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
 
     // ==========================================
-    // 6. 規約用モーダル
+    // 8. 規約用モーダル
     // ==========================================
     // モーダルを開く
     btnOpenLegal.addEventListener('click', () => {
@@ -347,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 7. 指定したメッセージを画面右上に通知として表示
+    // 9. 指定したメッセージを画面右上に通知として表示
     // ==========================================
     function showToast(message) {
         const container = document.getElementById('toast-container');
