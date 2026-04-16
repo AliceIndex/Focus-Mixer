@@ -7,7 +7,7 @@ jobs:
   versioning:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 2 # 差分比較のために直近2つのコミットを取得
 
