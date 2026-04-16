@@ -37,6 +37,7 @@ jobs:
 
       - name: Commit and Push
         run: |
+          VERSION=$(git rev-parse --short HEAD)
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
