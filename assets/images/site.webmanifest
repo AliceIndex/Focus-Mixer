@@ -1,6 +1,6 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "FocusMixer",
+  "short_name": "FocusMixer",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
