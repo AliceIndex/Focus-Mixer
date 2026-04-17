@@ -107,6 +107,40 @@ h1 {
   }
 }
 
+/* 確認トースト（はい/いいえボタン付き） */
+.toast-confirm {
+  pointer-events: auto;
+  animation: slideIn 0.3s ease-out;
+}
+
+.toast-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  justify-content: flex-end;
+}
+
+.btn-toast-yes,
+.btn-toast-no {
+  padding: 4px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: 1px solid var(--primary-color);
+  background: transparent;
+  color: var(--primary-color);
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-toast-yes:hover {
+  background: var(--primary-color);
+  color: var(--bg-color);
+}
+
+.btn-toast-no:hover {
+  opacity: 0.6;
+}
+
 /* メインレイアウト（中央コンテンツ＋両サイド広告） */
 .layout-wrapper {
   display: flex;

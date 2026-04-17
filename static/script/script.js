@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // 2. Web Audio APIの音量をフェードアウト（ノイズ防止）
-            if (gainNodes[id]) {
+            if (audioCtx && gainNodes[id]) {
                 // 0.1秒かけて滑らかに消す
                 gainNodes[id].gain.setTargetAtTime(0, audioCtx.currentTime, 0.05);
             }
@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     btnCloseTimer.addEventListener('click', () => {
-        modalMessage.textContent = !isFocusMode ? "さあ！集中しましょう。" : "お疲れ様です！休憩しましょう。";
+        modalMessage.textContent = isFocusMode ? "お疲れ様です！休憩しましょう。" : "さあ！集中しましょう。";
         timerModal.classList.add('hidden');
     });
 
@@ -373,6 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 初期化実行
     initMixerUI();
     updateDisplay();
+    checkAndRestoreTimerSettings();
 
     // ==========================================
     // 8. 規約用モーダル
@@ -409,5 +410,47 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             toast.remove();
         }, 3000);
+    }
+
+    // はい/いいえボタン付き確認トースト
+    function showConfirmToast(message, onConfirm) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast toast-confirm';
+        toast.innerHTML = `
+            <span>${message}</span>
+            <div class="toast-actions">
+                <button class="btn-toast-yes">はい</button>
+                <button class="btn-toast-no">いいえ</button>
+            </div>
+        `;
+        container.appendChild(toast);
+
+        const cleanup = () => toast.remove();
+        toast.querySelector('.btn-toast-yes').addEventListener('click', () => { onConfirm(); cleanup(); });
+        toast.querySelector('.btn-toast-no').addEventListener('click', cleanup);
+
+        // 8秒後に自動消滅（無操作時）
+        setTimeout(cleanup, 8000);
+    }
+
+    // ==========================================
+    // 10. ページ読み込み時のタイマー設定復元
+    // ==========================================
+    function checkAndRestoreTimerSettings() {
+        const saved = localStorage.getItem('focusMixerTimer');
+        if (!saved) return;
+
+        try {
+            const data = JSON.parse(saved);
+            showConfirmToast('保存されたタイマー設定を読み込みますか？ ⏱️', () => {
+                focusTotalSeconds = data.focus;
+                breakTotalSeconds = data.break;
+                resetTimer();
+                showToast('タイマー設定を復元しました ✅');
+            });
+        } catch (e) {
+            console.error('タイマー設定の読み込み失敗', e);
+        }
     }
 });
