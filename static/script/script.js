@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 2. 「同意する」ボタン
-    btnAcceptCookie.addEventListener('click', () => {
+    addDebouncedClick(btnAcceptCookie, () => {
         localStorage.setItem('cookie-consent', 'accepted');
         cookieBanner.classList.add('hidden');
         showToast('クッキーの使用に同意しました 🍪');
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 3. 「同意しない」ボタン
-    btnDeclineCookie.addEventListener('click', () => {
+    addDebouncedClick(btnDeclineCookie, () => {
         localStorage.setItem('cookie-consent', 'declined');
         cookieBanner.classList.add('hidden');
         showToast('クッキーの使用を拒否しました 🛡️');
@@ -143,13 +143,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    btnNext.addEventListener('click', () => {
+    addDebouncedClick(btnNext, () => {
         if (currentPage < 2) { currentPage++; updateSlider(); }
-    });
+    }, 300);
 
-    btnPrev.addEventListener('click', () => {
+    addDebouncedClick(btnPrev, () => {
         if (currentPage > 0) { currentPage--; updateSlider(); }
-    });
+    }, 300);
 
     // ==========================================
     // 5. 音響エンジン (Web Audio API)
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    btnMuteAll.addEventListener('click', () => {
+    addDebouncedClick(btnMuteAll, () => {
         SOUND_LIST.forEach(sound => {
             const id = sound.id;
 
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDisplay();
     }
 
-    btnStart.addEventListener('click', () => {
+    addDebouncedClick(btnStart, () => {
         if (timerInterval) return;
         timerInterval = setInterval(() => {
             timeLeft--;
@@ -261,13 +261,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     });
 
-    btnPause.addEventListener('click', () => { clearInterval(timerInterval); timerInterval = null; });
+    addDebouncedClick(btnPause, () => { clearInterval(timerInterval); timerInterval = null; });
 
-    btnReset.addEventListener('click', () => {
+    addDebouncedClick(btnReset, () => {
         resetTimer();
     });
 
-    btnSettingsOpen.addEventListener('click', () => {
+    addDebouncedClick(btnSettingsOpen, () => {
         focusMinInput.value = Math.floor(focusTotalSeconds / 60);
         focusSecInput.value = focusTotalSeconds % 60;
         breakMinInput.value = Math.floor(breakTotalSeconds / 60);
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
         settingsModal.classList.remove('hidden');
     });
 
-    btnApplySettings.addEventListener('click', () => {
+    addDebouncedClick(btnApplySettings, () => {
         const fMin = parseInt(focusMinInput.value) || 0;
         const fSec = parseInt(focusSecInput.value) || 0;
         const bMin = parseInt(breakMinInput.value) || 0;
@@ -289,11 +289,11 @@ document.addEventListener('DOMContentLoaded', () => {
         settingsModal.classList.add('hidden');
     });
 
-    btnCancelSettings.addEventListener('click', () => {
+    addDebouncedClick(btnCancelSettings, () => {
         settingsModal.classList.add('hidden');
     });
 
-    btnCloseTimer.addEventListener('click', () => {
+    addDebouncedClick(btnCloseTimer, () => {
         modalMessage.textContent = isFocusMode ? "お疲れ様です！休憩しましょう。" : "さあ！集中しましょう。";
         timerModal.classList.add('hidden');
     });
@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 7. ユーザー設定の保存・読込
     // ==========================================
-    document.getElementById('btn-save').addEventListener('click', () => {
+    addDebouncedClick(document.getElementById('btn-save'), () => {
         const preset = {};
         document.querySelectorAll('.volume-slider').forEach(s => {
             preset[s.dataset.sound] = s.value;
@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('設定を保存しました 💾');
     });
 
-    document.getElementById('btn-load').addEventListener('click', async () => {
+    addDebouncedClick(document.getElementById('btn-load'), async () => {
         const saved = localStorage.getItem('focusMixerPreset');
         if (!saved) {
             showToast('保存された設定がありません ⚠️');
@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         showToast('設定を読み込みました 🎶');
-    });
+    }, 1000);
 
     /**
      * プリセットからの適用専用関数
@@ -379,12 +379,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 8. 規約用モーダル
     // ==========================================
     // モーダルを開く
-    btnOpenLegal.addEventListener('click', () => {
+    addDebouncedClick(btnOpenLegal, () => {
         legalModal.classList.remove('hidden');
     });
 
     // モーダルを閉じる
-    btnCloseLegal.addEventListener('click', () => {
+    addDebouncedClick(btnCloseLegal, () => {
         legalModal.classList.add('hidden');
     });
 
@@ -396,8 +396,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 9. 指定したメッセージを画面右上に通知として表示
+    // 9. 通知・ユーティリティ
     // ==========================================
+
+    // 指定したメッセージを画面右上に通知として表示
     function showToast(message) {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
@@ -427,11 +429,25 @@ document.addEventListener('DOMContentLoaded', () => {
         container.appendChild(toast);
 
         const cleanup = () => toast.remove();
-        toast.querySelector('.btn-toast-yes').addEventListener('click', () => { onConfirm(); cleanup(); });
-        toast.querySelector('.btn-toast-no').addEventListener('click', cleanup);
+        addDebouncedClick(toast.querySelector('.btn-toast-yes'), () => { onConfirm(); cleanup(); });
+        addDebouncedClick(toast.querySelector('.btn-toast-no'), cleanup);
 
         // 8秒後に自動消滅（無操作時）
         setTimeout(cleanup, 8000);
+    }
+
+    // ボタンの連打防止ラッパー
+    function addDebouncedClick(element, handler, delay = 500) {
+        let busy = false;
+        element.addEventListener('click', async (e) => {
+            if (busy) return;
+            busy = true;
+            try {
+                await handler(e);
+            } finally {
+                setTimeout(() => { busy = false; }, delay);
+            }
+        });
     }
 
     // ==========================================
