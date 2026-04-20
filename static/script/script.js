@@ -46,19 +46,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const SOUND_LIST = [
         // Page 1: Nature
-        { id: 'rain', label: '雨音', icon: '🌧️', file: 'rain.mp3', category: 'nature' },
+        { id: 'rain', label: '雨音', icon: '🌧️', file: 'rain-opt.mp3', category: 'nature' },
         { id: 'bonfire', label: '焚き火', icon: '🔥', file: 'bonfire.mp3', category: 'nature' },
-        { id: 'waves', label: '波打ち際', icon: '🌊', file: 'waves.mp3', category: 'nature' },
-        { id: 'birds', label: '小鳥', icon: '🐦', file: 'birds.mp3', category: 'nature' },
+        { id: 'waves', label: '波打ち際', icon: '🌊', file: 'waves-opt.mp3', category: 'nature' },
+        { id: 'birds', label: '小鳥', icon: '🐦', file: 'birds-opt.mp3', category: 'nature' },
         // Page 2: Ambient & Tech
         { id: 'server', label: 'サーバー室', icon: '🖥️', file: 'server.mp3', category: 'tech' },
-        { id: 'cafe', label: 'カフェ', icon: '☕', file: 'cafe.mp3', category: 'tech' },
+        { id: 'cafe', label: 'カフェ', icon: '☕', file: 'cafe-opt.mp3', category: 'tech' },
         { id: 'train', label: '電車内', icon: '🚃', file: 'train.mp3', category: 'tech' },
         { id: 'fan', label: '換気扇', icon: '🌀', file: 'fan.mp3', category: 'tech' },
         // Page 3: Focus
-        { id: 'white', label: 'White', icon: '⚪', file: 'white.mp3', category: 'focus' },
-        { id: 'pink', label: 'Pink', icon: '🌸', file: 'pink.mp3', category: 'focus' },
-        { id: 'brown', label: 'Brown', icon: '🟤', file: 'brown.mp3', category: 'focus' },
+        { id: 'white', label: 'White', icon: '⚪', file: 'white-opt.mp3', category: 'focus' },
+        { id: 'pink', label: 'Pink', icon: '🌸', file: 'pink-opt.mp3', category: 'focus' },
+        { id: 'brown', label: 'Brown', icon: '🟤', file: 'brown-opt.mp3', category: 'focus' },
         { id: 'clock', label: '時計', icon: '⏱️', file: 'clock.mp3', category: 'focus' }
     ];
 
