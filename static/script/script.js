@@ -174,6 +174,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         await Promise.all(loadPromises);
+
+        await audioCtx.resume();
+        document.getElementById('silent-track').play().catch(() => { });
+        updateMediaSession();
     }
 
     async function handleVolumeInput(e, id) {
@@ -369,6 +373,51 @@ document.addEventListener('DOMContentLoaded', () => {
             audioSources[id] = null;
         }
     }
+
+    // ==========================================
+    // 5b. iOS バックグラウンド再生 / ノイズ対策
+    // ==========================================
+    function updateMediaSession() {
+        if (!('mediaSession' in navigator)) return;
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: 'Focus Mixer',
+            artist: 'Focus Mixer Team',
+            artwork: [
+                { src: './assets/images/web-app-manifest-192x192.png', sizes: '192x192', type: 'image/png' },
+                { src: './assets/images/web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png' }
+            ]
+        });
+        navigator.mediaSession.setActionHandler('play', () => {
+            if (audioCtx) audioCtx.resume();
+            document.getElementById('silent-track').play().catch(() => { });
+            if (!timerInterval) btnStart.click();
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+            if (timerInterval) btnPause.click();
+            if (audioCtx) audioCtx.suspend();
+        });
+    }
+
+    document.addEventListener('visibilitychange', () => {
+        if (!audioCtx) return;
+        if (document.visibilityState === 'hidden') {
+            SOUND_LIST.forEach(sound => {
+                const input = document.querySelector(`input[data-sound="${sound.id}"]`);
+                const volume = input ? parseFloat(input.value) / 100 : 0;
+                if (gainNodes[sound.id] && volume > 0) {
+                    gainNodes[sound.id].gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                }
+            });
+        } else {
+            SOUND_LIST.forEach(sound => {
+                const input = document.querySelector(`input[data-sound="${sound.id}"]`);
+                const volume = input ? parseFloat(input.value) / 100 : 0;
+                if (gainNodes[sound.id] && volume > 0) {
+                    gainNodes[sound.id].gain.exponentialRampToValueAtTime(volume, audioCtx.currentTime + 0.2);
+                }
+            });
+        }
+    });
 
     // 初期化実行
     initMixerUI();
