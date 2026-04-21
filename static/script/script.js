@@ -4,7 +4,7 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  */
 
-const CURRENT_VERSION = '7ec66c4';
+const CURRENT_VERSION = '3844465';
 
 document.addEventListener('DOMContentLoaded', () => {
 
