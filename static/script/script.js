@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'rain', label: '雨音', icon: '🌧️', file: 'rain.ogg', category: 'nature' },
         { id: 'bonfire', label: '焚き火', icon: '🔥', file: 'bonfire.ogg', category: 'nature' },
         { id: 'waves', label: '波打ち際', icon: '🌊', file: 'waves.ogg', category: 'nature' },
-        { id: 'birds', label: '小鳥', icon: '🐦', file: 'birds-opt.ogg', category: 'nature' },
+        { id: 'birds', label: '野鳥', icon: '🐦', file: 'birds-opt.ogg', category: 'nature' },
         // Page 2: Ambient & Tech
         { id: 'server', label: 'サーバー室', icon: '🖥️', file: 'server.ogg', category: 'tech' },
         { id: 'cafe', label: 'カフェ', icon: '☕', file: 'cafe-opt.ogg', category: 'tech' },
