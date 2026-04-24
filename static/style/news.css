@@ -1,0 +1,63 @@
+/*
+ * Focus Mixer
+ * Copyright (c) 2026 AliceIndex. All rights reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ */
+
+.news-entry {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.news-entry:last-child {
+    border-bottom: none;
+}
+
+.news-date {
+    flex-shrink: 0;
+    width: 100px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding-top: 3px;
+}
+
+.news-body h3 {
+    color: var(--text-main);
+    margin-bottom: 6px;
+    font-size: 1rem;
+}
+
+.news-body p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+.news-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 6px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.tag-feature { background: rgba(100, 255, 218, 0.15); color: var(--primary-color); border: 1px solid rgba(100, 255, 218, 0.3); }
+.tag-fix     { background: rgba(255, 152, 0, 0.12);  color: #ffb74d;               border: 1px solid rgba(255, 152, 0, 0.3); }
+.tag-perf    { background: rgba(124, 77, 255, 0.12); color: #b39ddb;               border: 1px solid rgba(124, 77, 255, 0.3); }
+.tag-infra   { background: rgba(255, 82, 82, 0.12);  color: #ff8a80;               border: 1px solid rgba(255, 82, 82, 0.3); }
+
+@media (max-width: 600px) {
+    .news-entry {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .news-date {
+        width: auto;
+    }
+}

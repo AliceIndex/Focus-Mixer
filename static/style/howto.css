@@ -1,0 +1,68 @@
+/*
+ * Focus Mixer
+ * Copyright (c) 2026 AliceIndex. All rights reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ */
+
+.step-card {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.step-number {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: #121212;
+    font-weight: bold;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.tip-box {
+    background: rgba(100, 255, 218, 0.07);
+    border-left: 3px solid var(--primary-color);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.sound-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.sound-tag {
+    background: var(--surface-color);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.about-section h3 + p {
+    margin-bottom: 16px;
+}
+
+@media (max-width: 600px) {
+    .step-card {
+        flex-direction: column;
+        gap: 12px;
+    }
+}

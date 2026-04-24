@@ -1,0 +1,33 @@
+/*
+ * Focus Mixer
+ * Copyright (c) 2026 AliceIndex. All rights reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ */
+
+.policy-date {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.about-section .policy-list {
+    margin: 12px 0 16px;
+}
+
+.policy-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.policy-list li:last-child {
+    border-bottom: none;
+}
+
+.about-section h3 + p {
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+.section-lead {
+    margin-bottom: 16px;
+}
