@@ -27,6 +27,7 @@
     <!-- style sheets -->
     <link rel="stylesheet" href="./static/style/style.css?v=b358353">
     <link rel="stylesheet" href="./static/style/about.css?v=b358353">
+    <link rel="stylesheet" href="./static/style/policy.css?v=b358353">
 
     <!-- icons -->
     <link rel="icon" type="image/png" href="./assets/images/favicon-96x96.png" sizes="96x96" />
@@ -60,21 +61,21 @@
                 ユーザーのプライバシーを尊重し、個人情報の保護に努めています。
                 本ページでは、当サービスにおける情報の取り扱いについて説明します。
             </p>
-            <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-muted);">最終更新日：2026年4月</p>
+            <p class="policy-date">最終更新日：2026年4月</p>
         </section>
 
         <section class="about-section">
             <h2>1. 収集する情報</h2>
             <p>当サービスでは、以下の情報を収集することがあります。</p>
             <h3>自動収集される情報</h3>
-            <ul style="margin: 12px 0 16px 0; padding-left: 0; list-style: none;">
-                <li style="padding: 6px 0; border-bottom: 1px solid rgba(100,255,218,0.1);">・ ブラウザの種類・バージョン</li>
-                <li style="padding: 6px 0; border-bottom: 1px solid rgba(100,255,218,0.1);">・ アクセス日時</li>
-                <li style="padding: 6px 0; border-bottom: 1px solid rgba(100,255,218,0.1);">・ 参照元URL</li>
-                <li style="padding: 6px 0;">・ 利用環境（OS、デバイスの種類）</li>
+            <ul class="policy-list">
+                <li>・ ブラウザの種類・バージョン</li>
+                <li>・ アクセス日時</li>
+                <li>・ 参照元URL</li>
+                <li>・ 利用環境（OS、デバイスの種類）</li>
             </ul>
             <h3>ローカルに保存される情報</h3>
-            <p style="margin-top: 8px;">
+            <p>
                 タイマー設定・音量設定・プリセット情報はすべてお使いのブラウザの
                 <span class="highlight">ローカルストレージ</span>に保存されます。
                 これらのデータは外部サーバーに送信されることはなく、運営者もアクセスできません。
@@ -101,10 +102,10 @@
                 AdSenseは、ユーザーの興味・関心に応じた広告を表示するためにCookieを使用します。
             </p>
             <h3>Cookie の用途</h3>
-            <ul style="margin: 12px 0 16px 0; padding-left: 0; list-style: none;">
-                <li style="padding: 6px 0; border-bottom: 1px solid rgba(100,255,218,0.1);">・ ユーザーの過去の訪問履歴に基づいた広告表示</li>
-                <li style="padding: 6px 0; border-bottom: 1px solid rgba(100,255,218,0.1);">・ 広告のクリック数・表示数の計測</li>
-                <li style="padding: 6px 0;">・ 不正クリックの防止</li>
+            <ul class="policy-list">
+                <li>・ ユーザーの過去の訪問履歴に基づいた広告表示</li>
+                <li>・ 広告のクリック数・表示数の計測</li>
+                <li>・ 不正クリックの防止</li>
             </ul>
             <p>
                 ユーザーは <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" class="link-btn">Google 広告設定</a> から
@@ -118,20 +119,20 @@
             <p>
                 運営者は、以下の場合を除き、収集した情報を第三者に提供することはありません。
             </p>
-            <ul style="margin: 12px 0 0 0; padding-left: 0; list-style: none;">
-                <li style="padding: 6px 0; border-bottom: 1px solid rgba(100,255,218,0.1);">・ ユーザー本人の同意がある場合</li>
-                <li style="padding: 6px 0; border-bottom: 1px solid rgba(100,255,218,0.1);">・ 法令に基づく開示が必要な場合</li>
-                <li style="padding: 6px 0;">・ 人命・財産の保護のために緊急に必要な場合</li>
+            <ul class="policy-list">
+                <li>・ ユーザー本人の同意がある場合</li>
+                <li>・ 法令に基づく開示が必要な場合</li>
+                <li>・ 人命・財産の保護のために緊急に必要な場合</li>
             </ul>
         </section>
 
         <section class="about-section">
             <h2>5. 免責事項</h2>
-            <p style="margin-bottom: 16px;">
+            <p class="section-lead">
                 当サービスの利用により生じた直接的・間接的な損害について、運営者は一切の責任を負いません。
             </p>
             <h3>コンテンツの正確性</h3>
-            <p style="margin-bottom: 16px;">
+            <p>
                 当サービスに掲載する情報は正確性の維持に努めていますが、内容の完全性・正確性を保証するものではありません。
                 サービスの内容は予告なく変更・中断・終了することがあります。
             </p>
@@ -160,8 +161,8 @@
         </section>
     </main>
 
-    <footer class="about-section" style="text-align: center;">
-        <nav style="margin-bottom: 16px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+    <footer class="about-section page-footer">
+        <nav class="footer-nav">
             <a href="https://focusmixer.com" class="link-btn">Home</a>
             <a href="./about.html" class="link-btn">About</a>
             <a href="./howto.html" class="link-btn">使い方</a>
@@ -169,7 +170,7 @@
             <a href="./news/index.html" class="link-btn">News</a>
             <a href="./blog/index.html" class="link-btn">Blog</a>
         </nav>
-        <p style="font-size: 0.8rem; opacity: 0.7;">© 2026 Focus Mixer All rights reserved.</p>
+        <p class="footer-copy">© 2026 Focus Mixer All rights reserved.</p>
     </footer>
 
 </body>

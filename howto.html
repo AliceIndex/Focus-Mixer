@@ -27,6 +27,7 @@
     <!-- style sheets -->
     <link rel="stylesheet" href="./static/style/style.css?v=b358353">
     <link rel="stylesheet" href="./static/style/about.css?v=b358353">
+    <link rel="stylesheet" href="./static/style/howto.css?v=b358353">
 
     <!-- icons -->
     <link rel="icon" type="image/png" href="./assets/images/favicon-96x96.png" sizes="96x96" />
@@ -42,67 +43,6 @@
     <!-- adsense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7365336492579910"
         crossorigin="anonymous"></script>
-
-    <style>
-        .step-card {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-            margin-bottom: 24px;
-        }
-
-        .step-number {
-            flex-shrink: 0;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            color: #121212;
-            font-weight: bold;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .step-content h3 {
-            color: var(--primary-color);
-            margin-bottom: 8px;
-        }
-
-        .tip-box {
-            background: rgba(100, 255, 218, 0.07);
-            border-left: 3px solid var(--primary-color);
-            border-radius: 0 8px 8px 0;
-            padding: 12px 16px;
-            margin-top: 12px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .sound-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 10px;
-            margin-top: 16px;
-        }
-
-        .sound-tag {
-            background: var(--surface-color);
-            border: 1px solid rgba(100, 255, 218, 0.2);
-            border-radius: 6px;
-            padding: 8px 12px;
-            font-size: 0.85rem;
-            text-align: center;
-        }
-
-        @media (max-width: 600px) {
-            .step-card {
-                flex-direction: column;
-                gap: 12px;
-            }
-        }
-    </style>
 </head>
 
 <body class="about-page">
@@ -210,12 +150,12 @@
         <section class="about-section">
             <h2>おすすめの組み合わせ</h2>
             <h3>全集中モード</h3>
-            <p style="margin-bottom: 16px;">
+            <p>
                 Rain（雨音）× White Noise — 外部の騒音を完全にシャットアウトし、深い集中状態を作り出します。
                 コーディングや文書作成など、思考力が必要な作業に最適です。
             </p>
             <h3>カフェ環境モード</h3>
-            <p style="margin-bottom: 16px;">
+            <p>
                 Cafe（カフェ）× Birds（小鳥）— 適度なざわつきと自然音が、創造的な作業を後押しします。
                 デザインやライティングなど、発想力が求められる場面に向いています。
             </p>
@@ -229,12 +169,12 @@
         <section class="about-section">
             <h2>よくある質問</h2>
             <h3>音が突然止まりました</h3>
-            <p style="margin-bottom: 16px;">
+            <p>
                 ブラウザのタブを長時間バックグラウンドにしていると、省電力機能により音が一時停止することがあります。
                 タブをアクティブにして再度再生ボタンを押してください。
             </p>
             <h3>スマートフォンでも使えますか？</h3>
-            <p style="margin-bottom: 16px;">
+            <p>
                 はい、対応しています。ただし、スマートフォンの場合は画面が消灯するとオーディオが停止する場合があります。
                 画面の自動消灯設定を「なし」にするか、画面を時折タップしてください。
             </p>
@@ -246,8 +186,8 @@
         </section>
     </main>
 
-    <footer class="about-section" style="text-align: center;">
-        <nav style="margin-bottom: 16px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+    <footer class="about-section page-footer">
+        <nav class="footer-nav">
             <a href="https://focusmixer.com" class="link-btn">Home</a>
             <a href="./about.html" class="link-btn">About</a>
             <a href="./contact.html" class="link-btn">Contact</a>
@@ -255,7 +195,7 @@
             <a href="./news/index.html" class="link-btn">News</a>
             <a href="./blog/index.html" class="link-btn">Blog</a>
         </nav>
-        <p style="font-size: 0.8rem; opacity: 0.7;">© 2026 Focus Mixer All rights reserved.</p>
+        <p class="footer-copy">© 2026 Focus Mixer All rights reserved.</p>
     </footer>
 
 </body>

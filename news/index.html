@@ -27,6 +27,7 @@
     <!-- style sheets -->
     <link rel="stylesheet" href="../static/style/style.css?v=b358353">
     <link rel="stylesheet" href="../static/style/about.css?v=b358353">
+    <link rel="stylesheet" href="../static/style/news.css?v=b358353">
 
     <!-- icons -->
     <link rel="icon" type="image/png" href="../assets/images/favicon-96x96.png" sizes="96x96" />
@@ -42,60 +43,6 @@
     <!-- adsense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7365336492579910"
         crossorigin="anonymous"></script>
-
-    <style>
-        .news-entry {
-            display: flex;
-            gap: 20px;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
-        }
-
-        .news-entry:last-child {
-            border-bottom: none;
-        }
-
-        .news-date {
-            flex-shrink: 0;
-            width: 100px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            padding-top: 3px;
-        }
-
-        .news-body h3 {
-            color: var(--text-main);
-            margin-bottom: 6px;
-            font-size: 1rem;
-        }
-
-        .news-body p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-        }
-
-        .news-tag {
-            display: inline-block;
-            font-size: 0.72rem;
-            padding: 2px 8px;
-            border-radius: 4px;
-            margin-right: 6px;
-            margin-bottom: 8px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-
-        .tag-feature { background: rgba(100, 255, 218, 0.15); color: var(--primary-color); border: 1px solid rgba(100,255,218,0.3); }
-        .tag-fix     { background: rgba(255, 152, 0, 0.12);  color: #ffb74d;               border: 1px solid rgba(255,152,0,0.3); }
-        .tag-perf    { background: rgba(124, 77, 255, 0.12); color: #b39ddb;               border: 1px solid rgba(124,77,255,0.3); }
-        .tag-infra   { background: rgba(255, 82, 82, 0.12);  color: #ff8a80;               border: 1px solid rgba(255,82,82,0.3); }
-
-        @media (max-width: 600px) {
-            .news-entry { flex-direction: column; gap: 6px; }
-            .news-date { width: auto; }
-        }
-    </style>
 </head>
 
 <body class="about-page">
@@ -203,8 +150,8 @@
         </section>
     </main>
 
-    <footer class="about-section" style="text-align: center;">
-        <nav style="margin-bottom: 16px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+    <footer class="about-section page-footer">
+        <nav class="footer-nav">
             <a href="https://focusmixer.com" class="link-btn">Home</a>
             <a href="../about.html" class="link-btn">About</a>
             <a href="../howto.html" class="link-btn">使い方</a>
@@ -212,7 +159,7 @@
             <a href="../policy.html" class="link-btn">Privacy Policy</a>
             <a href="../blog/index.html" class="link-btn">Blog</a>
         </nav>
-        <p style="font-size: 0.8rem; opacity: 0.7;">© 2026 Focus Mixer All rights reserved.</p>
+        <p class="footer-copy">© 2026 Focus Mixer All rights reserved.</p>
     </footer>
 
 </body>
