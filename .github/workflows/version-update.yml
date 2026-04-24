@@ -28,6 +28,26 @@ jobs:
             echo "Updated about.css version in HTML files."
           fi
 
+          if echo "$CHANGED_FILES" | grep -q "howto.css"; then
+            sed -i "s/howto.css?v=[^\"]*/howto.css?v=$VERSION/g" ./*.html
+            echo "Updated howto.css version in HTML files."
+          fi
+
+          if echo "$CHANGED_FILES" | grep -q "policy.css"; then
+            sed -i "s/policy.css?v=[^\"]*/policy.css?v=$VERSION/g" ./*.html
+            echo "Updated policy.css version in HTML files."
+          fi
+
+          if echo "$CHANGED_FILES" | grep -q "news.css"; then
+            sed -i "s/news.css?v=[^\"]*/news.css?v=$VERSION/g" ./*.html
+            echo "Updated news.css version in HTML files."
+          fi
+
+          if echo "$CHANGED_FILES" | grep -q "blog.css"; then
+            sed -i "s/blog.css?v=[^\"]*/blog.css?v=$VERSION/g" ./*.html
+            echo "Updated blog.css version in HTML files."
+          fi
+
           if echo "$CHANGED_FILES" | grep -q "script.js"; then
             sed -i "s/script.js?v=[^\"]*/script.js?v=$VERSION/g" *.html
             # script.js 本体の内部バージョンも更新してlocalStorageを制御
