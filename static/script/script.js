@@ -77,20 +77,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const SOUND_LIST = [
         // Page 1: Nature
-        { id: 'rain',    label: { ja: '雨音',      en: 'Rain'        }, icon: '🌧️', file: 'rain.ogg',       category: 'nature' },
-        { id: 'bonfire', label: { ja: '焚き火',    en: 'Bonfire'     }, icon: '🔥', file: 'bonfire.ogg',    category: 'nature' },
-        { id: 'waves',   label: { ja: '波打ち際',  en: 'Waves'       }, icon: '🌊', file: 'waves.ogg',      category: 'nature' },
-        { id: 'birds',   label: { ja: '野鳥',      en: 'Birds'       }, icon: '🐦', file: 'birds-opt.ogg',  category: 'nature' },
+        { id: 'rain', label: { ja: '雨音', en: 'Rain' }, icon: '🌧️', file: 'rain.ogg', category: 'nature' },
+        { id: 'bonfire', label: { ja: '焚き火', en: 'Bonfire' }, icon: '🔥', file: 'bonfire.ogg', category: 'nature' },
+        { id: 'waves', label: { ja: '波打ち際', en: 'Waves' }, icon: '🌊', file: 'waves.ogg', category: 'nature' },
+        { id: 'birds', label: { ja: '野鳥', en: 'Birds' }, icon: '🐦', file: 'birds-opt.ogg', category: 'nature' },
         // Page 2: Ambient & Tech
-        { id: 'server',  label: { ja: 'サーバー室', en: 'Server Room' }, icon: '🖥️', file: 'server.ogg',     category: 'tech' },
-        { id: 'cafe',    label: { ja: 'カフェ',    en: 'Cafe'        }, icon: '☕', file: 'cafe-opt.ogg',   category: 'tech' },
-        { id: 'train',   label: { ja: '電車内',    en: 'Train'       }, icon: '🚃', file: 'train.ogg',      category: 'tech' },
-        { id: 'fan',     label: { ja: '換気扇',    en: 'Fan'         }, icon: '🌀', file: 'fan.ogg',        category: 'tech' },
+        { id: 'server', label: { ja: 'サーバー室', en: 'Server Room' }, icon: '🖥️', file: 'server.ogg', category: 'tech' },
+        { id: 'cafe', label: { ja: 'カフェ', en: 'Cafe' }, icon: '☕', file: 'cafe-opt.ogg', category: 'tech' },
+        { id: 'train', label: { ja: '電車内', en: 'Train' }, icon: '🚃', file: 'train.ogg', category: 'tech' },
+        { id: 'fan', label: { ja: '換気扇', en: 'Fan' }, icon: '🌀', file: 'fan.ogg', category: 'tech' },
         // Page 3: Focus
-        { id: 'white',   label: { ja: 'White',     en: 'White Noise' }, icon: '⚪', file: 'white-opt.ogg',  category: 'focus' },
-        { id: 'pink',    label: { ja: 'Pink',      en: 'Pink Noise'  }, icon: '🌸', file: 'pink-opt.ogg',   category: 'focus' },
-        { id: 'brown',   label: { ja: 'Brown',     en: 'Brown Noise' }, icon: '🟤', file: 'brown-opt.ogg',  category: 'focus' },
-        { id: 'clock',   label: { ja: '時計',      en: 'Clock'       }, icon: '⏱️', file: 'clock.ogg',      category: 'focus' }
+        { id: 'white', label: { ja: 'White', en: 'White Noise' }, icon: '⚪', file: 'white-opt.ogg', category: 'focus' },
+        { id: 'pink', label: { ja: 'Pink', en: 'Pink Noise' }, icon: '🌸', file: 'pink-opt.ogg', category: 'focus' },
+        { id: 'brown', label: { ja: 'Brown', en: 'Brown Noise' }, icon: '🟤', file: 'brown-opt.ogg', category: 'focus' },
+        { id: 'clock', label: { ja: '時計', en: 'Clock' }, icon: '⏱️', file: 'clock.ogg', category: 'focus' }
     ];
 
     // ==========================================
@@ -125,9 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const timerModal = document.getElementById('timer-modal');
     const btnCloseTimer = document.getElementById('modal-close-btn');
     const modalMessage = document.getElementById('modal-message');
-    const legalModal = document.getElementById('legal-modal');
-    const btnOpenLegal = document.getElementById('btn-open-legal');
-    const btnCloseLegal = document.getElementById('btn-close-legal');
     const bellSound = new Audio('/assets/sounds/bell.ogg');
 
     const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -434,24 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkAndRestoreTimerSettings();
 
     // ==========================================
-    // 8. 規約用モーダル
-    // ==========================================
-    addDebouncedClick(btnOpenLegal, () => {
-        legalModal.classList.remove('hidden');
-    });
-
-    addDebouncedClick(btnCloseLegal, () => {
-        legalModal.classList.add('hidden');
-    });
-
-    legalModal.addEventListener('click', (e) => {
-        if (e.target === legalModal) {
-            legalModal.classList.add('hidden');
-        }
-    });
-
-    // ==========================================
-    // 9. 通知・ユーティリティ
+    // 8. 通知・ユーティリティ
     // ==========================================
     function showToast(message) {
         const container = document.getElementById('toast-container');
@@ -500,7 +480,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 10. ページ読み込み時のタイマー設定復元
+    // 9. ページ読み込み時のタイマー設定復元
     // ==========================================
     function checkAndRestoreTimerSettings() {
         const saved = localStorage.getItem('focusMixerTimer');
