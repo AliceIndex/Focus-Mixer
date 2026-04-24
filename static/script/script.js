@@ -4,7 +4,7 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  */
 
-const CURRENT_VERSION = '3bf635a';
+const CURRENT_VERSION = 'c9dffe5';
 
 // ==========================================
 // i18n: 言語検出と文字列定義
