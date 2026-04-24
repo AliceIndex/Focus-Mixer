@@ -1,0 +1,220 @@
+<!--
+* Focus Mixer
+* Copyright (c) 2026 AliceIndex. All rights reserved.
+* Unauthorized copying of this file, via any medium is strictly prohibited.
+-->
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- base info -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- page info -->
+    <title>アップデート情報 | Focus Mixer</title>
+    <meta name="description" content="Focus Mixerの最新アップデート情報・バグ修正・新機能追加のログ。開発の進捗状況をここで確認できます。">
+    <link rel="canonical" href="https://focusmixer.com/news/">
+
+    <!-- for OGP -->
+    <meta property="og:title" content="アップデート情報 | Focus Mixer">
+    <meta property="og:description" content="Focus Mixerの最新アップデート情報・バグ修正・新機能の追加ログ。">
+    <meta property="og:url" content="https://focusmixer.com/news/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://focusmixer.com/assets/images/og-image.png">
+
+    <!-- style sheets -->
+    <link rel="stylesheet" href="../static/style/style.css?v=b358353">
+    <link rel="stylesheet" href="../static/style/about.css?v=b358353">
+
+    <!-- icons -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg" />
+    <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="FocusMixer" />
+    <link rel="manifest" href="../assets/images/site.webmanifest" />
+
+    <!-- scripts -->
+    <script src="../static/script/theme.js"></script>
+
+    <!-- adsense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7365336492579910"
+        crossorigin="anonymous"></script>
+
+    <style>
+        .news-entry {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .news-entry:last-child {
+            border-bottom: none;
+        }
+
+        .news-date {
+            flex-shrink: 0;
+            width: 100px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            padding-top: 3px;
+        }
+
+        .news-body h3 {
+            color: var(--text-main);
+            margin-bottom: 6px;
+            font-size: 1rem;
+        }
+
+        .news-body p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .news-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 6px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-feature { background: rgba(100, 255, 218, 0.15); color: var(--primary-color); border: 1px solid rgba(100,255,218,0.3); }
+        .tag-fix     { background: rgba(255, 152, 0, 0.12);  color: #ffb74d;               border: 1px solid rgba(255,152,0,0.3); }
+        .tag-perf    { background: rgba(124, 77, 255, 0.12); color: #b39ddb;               border: 1px solid rgba(124,77,255,0.3); }
+        .tag-infra   { background: rgba(255, 82, 82, 0.12);  color: #ff8a80;               border: 1px solid rgba(255,82,82,0.3); }
+
+        @media (max-width: 600px) {
+            .news-entry { flex-direction: column; gap: 6px; }
+            .news-date { width: auto; }
+        }
+    </style>
+</head>
+
+<body class="about-page">
+    <header>
+        <a href="https://focusmixer.com" class="link-btn">
+            <h1>Focus Mixer</h1>
+        </a>
+        <button id="theme-toggle" class="theme-btn">☀️ Light</button>
+    </header>
+
+    <main>
+        <section class="about-section">
+            <h1>アップデート情報</h1>
+            <p>Focus Mixerの最新の変更内容・バグ修正・新機能追加のログです。</p>
+        </section>
+
+        <section class="about-section">
+            <h2>2026年</h2>
+
+            <div class="news-entry">
+                <div class="news-date">2026-04-24</div>
+                <div class="news-body">
+                    <span class="news-tag tag-feature">新機能</span>
+                    <h3>サイトの情報ページ群を追加</h3>
+                    <p>
+                        使い方ガイド・お問い合わせ・プライバシーポリシー・ニュース・ブログページを新設しました。
+                        各ページへはフッターのリンクからアクセスできます。
+                    </p>
+                </div>
+            </div>
+
+            <div class="news-entry">
+                <div class="news-date">2026-04-22</div>
+                <div class="news-body">
+                    <span class="news-tag tag-infra">インフラ</span>
+                    <h3>スマートバージョニングシステムの導入</h3>
+                    <p>
+                        CSSおよびJavaScriptのバージョンハッシュを自動管理するシステムを導入しました。
+                        更新時のキャッシュ問題が自動的に解消されます。
+                    </p>
+                </div>
+            </div>
+
+            <div class="news-entry">
+                <div class="news-date">2026-04-18</div>
+                <div class="news-body">
+                    <span class="news-tag tag-perf">パフォーマンス</span>
+                    <h3>鳥の環境音ファイルを軽量化</h3>
+                    <p>
+                        Birds（小鳥）の音源ファイルサイズを削減しました。
+                        初回読み込み時間が短縮され、低速回線でも快適に利用できるようになりました。
+                    </p>
+                </div>
+            </div>
+
+            <div class="news-entry">
+                <div class="news-date">2026-04-15</div>
+                <div class="news-body">
+                    <span class="news-tag tag-fix">バグ修正</span>
+                    <h3>音源ファイルのパス参照エラーを修正</h3>
+                    <p>
+                        一部の環境で音源ファイルが読み込まれない問題を修正しました。
+                        ファイルパスの参照方法を見直し、すべてのブラウザで正常に動作するようになりました。
+                    </p>
+                </div>
+            </div>
+
+            <div class="news-entry">
+                <div class="news-date">2026-04-10</div>
+                <div class="news-body">
+                    <span class="news-tag tag-feature">新機能</span>
+                    <span class="news-tag tag-perf">パフォーマンス</span>
+                    <h3>プロジェクト名を「Focus Mixer」に改名・全面リニューアル</h3>
+                    <p>
+                        サービス名を正式に「Focus Mixer」に変更しました。
+                        あわせてUIを刷新し、SFテイストのダークモードデザインを採用。
+                        ライトモードとのトグル切り替え機能も追加されました。
+                    </p>
+                </div>
+            </div>
+
+            <div class="news-entry">
+                <div class="news-date">2026-03-01</div>
+                <div class="news-body">
+                    <span class="news-tag tag-feature">新機能</span>
+                    <h3>プリセット機能を追加</h3>
+                    <p>
+                        お気に入りの音の組み合わせをブラウザに保存できるプリセット機能を追加しました。
+                        最大3つまでのプリセットを保存し、ワンクリックで呼び出せます。
+                    </p>
+                </div>
+            </div>
+
+            <div class="news-entry">
+                <div class="news-date">2026-01-15</div>
+                <div class="news-body">
+                    <span class="news-tag tag-feature">新機能</span>
+                    <h3>正式リリース（v1.0.0）</h3>
+                    <p>
+                        Focus Mixerを正式にリリースしました。12種類の環境音とポモドーロタイマーを搭載。
+                        Web Audio APIを使用した高品質なサウンド再生を、追加インストールなしで体験できます。
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="about-section" style="text-align: center;">
+        <nav style="margin-bottom: 16px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+            <a href="https://focusmixer.com" class="link-btn">Home</a>
+            <a href="../about.html" class="link-btn">About</a>
+            <a href="../howto.html" class="link-btn">使い方</a>
+            <a href="../contact.html" class="link-btn">Contact</a>
+            <a href="../policy.html" class="link-btn">Privacy Policy</a>
+            <a href="../blog/index.html" class="link-btn">Blog</a>
+        </nav>
+        <p style="font-size: 0.8rem; opacity: 0.7;">© 2026 Focus Mixer All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>
