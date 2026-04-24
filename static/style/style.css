@@ -650,3 +650,28 @@ header {
     text-align: center;
   }
 }
+
+/* コンタクトページ：フォーム遷移ボタン */
+.contact-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 28px 0 8px;
+}
+
+.contact-btn {
+  display: inline-block;
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 16px 48px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+  background: rgba(100, 255, 218, 0.08);
+  box-shadow: 0 0 18px rgba(100, 255, 218, 0.45), 0 0 40px rgba(100, 255, 218, 0.12);
+}
