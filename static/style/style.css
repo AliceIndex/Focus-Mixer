@@ -404,6 +404,26 @@ header {
   color: var(--bg-color);
 }
 
+.lang-btn {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 1px solid var(--text-main);
+  color: var(--text-main);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.lang-btn:hover {
+  background-color: var(--text-main);
+  color: var(--bg-color);
+}
+
 /* =========================================
    モーダルウィンドウのデザイン
    ========================================= */
