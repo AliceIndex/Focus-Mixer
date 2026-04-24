@@ -5,7 +5,7 @@
 -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
   <!-- base info -->
@@ -14,10 +14,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- page info -->
-  <title>Focus Mixer | Maximize Your Focus, One Click Away.</title>
+  <title>Focus Mixer | 最高の集中力を、1クリックで。</title>
   <meta name="description"
-    content="25-minute focus sessions and 12 ambient sounds to build your perfect workspace. A minimalist Pomodoro timer & ambient mixer. High-quality sound powered by Web Audio API, completely free.">
-  <link rel="canonical" href="https://focusmixer.com/">
+    content="25分の集中と12の環境音で、最高の作業空間を。ミニマリストのためのポモドーロタイマー＆アンビエントミキサー。Web Audio APIによる高品質なサウンドを完全無料で提供。">
+  <link rel="canonical" href="https://focusmixer.com/jp/">
 
   <!-- hreflang -->
   <link rel="alternate" hreflang="en" href="https://focusmixer.com/">
@@ -25,35 +25,34 @@
   <link rel="alternate" hreflang="x-default" href="https://focusmixer.com/">
 
   <!-- for OGP -->
-  <meta property="og:title" content="Focus Mixer | Ambient Sound Mixer for Deep Focus">
-  <meta property="og:description"
-    content="Mix 25-minute focus sessions with 12 ambient sounds. Create your own immersive workspace.">
-  <meta property="og:url" content="https://focusmixer.com/">
+  <meta property="og:title" content="Focus Mixer | 集中力をハックする環境音ミキサー">
+  <meta property="og:description" content="25分の集中と12の環境音をミックス。自分だけの没入空間を作ろう。">
+  <meta property="og:url" content="https://focusmixer.com/jp/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://focusmixer.com/assets/images/og-image.png">
   <meta property="og:site_name" content="Focus Mixer">
 
   <!-- for twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Focus Mixer | Maximize Your Focus, One Click Away.">
-  <meta name="twitter:description" content="Focus tools built by engineers, for engineers.">
+  <meta name="twitter:title" content="Focus Mixer | 最高の集中力を、1クリックで。">
+  <meta name="twitter:description" content="エンジニアによる、エンジニアのための集中ツール。">
   <meta name="twitter:image" content="https://focusmixer.com/assets/og-image.png">
 
   <!-- style sheets -->
-  <link rel="stylesheet" href="./static/style/destyle.css">
-  <link rel="stylesheet" href="./static/style/style.css?v=b358353">
+  <link rel="stylesheet" href="../static/style/destyle.css">
+  <link rel="stylesheet" href="../static/style/style.css?v=b358353">
 
   <!-- icons -->
-  <link rel="icon" type="image/png" href="./assets/images/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="./assets/images/favicon.svg" />
-  <link rel="shortcut icon" href="./assets/images/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" href="../assets/images/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg" />
+  <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-title" content="FocusMixer" />
-  <link rel="manifest" href="./assets/images/site.webmanifest" />
+  <link rel="manifest" href="../assets/images/site.webmanifest" />
 
   <!-- scripts -->
-  <script src="./static/script/script.js?v=3bf635a"></script>
-  <script src="./static/script/theme.js"></script>
+  <script src="../static/script/script.js?v=3bf635a"></script>
+  <script src="../static/script/theme.js"></script>
 
   <!-- adsense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7365336492579910"
@@ -61,9 +60,9 @@
 </head>
 
 <body>
-  <audio id="silent-track" loop src="assets/sounds/silent.ogg" style="display: none;"></audio>
+  <audio id="silent-track" loop src="../assets/sounds/silent.ogg" style="display: none;"></audio>
   <header>
-    <a href="/jp/" class="lang-btn">日本語</a>
+    <a href="/" class="lang-btn">English</a>
     <h1>Focus Mixer</h1>
     <button id="theme-toggle" class="theme-btn">☀️ Light</button>
   </header>
@@ -117,9 +116,9 @@
       </div>
 
       <section class="preset-section">
-        <button id="btn-save" class="preset-btn">Save</button>
-        <button id="btn-load" class="preset-btn">Load</button>
-        <button id="btn-mute-all" class="preset-btn danger-btn">Mute All</button>
+        <button id="btn-save" class="preset-btn">保存</button>
+        <button id="btn-load" class="preset-btn">読込</button>
+        <button id="btn-mute-all" class="preset-btn danger-btn">全ミュート</button>
       </section>
     </main>
 
@@ -137,25 +136,25 @@
       <h3>Timer Settings</h3>
       <div class="settings-grid">
         <div class="setting-group">
-          <label>Focus Time:</label>
+          <label>集中時間:</label>
           <div class="input-pair">
-            <input type="number" class="timer-input" id="focus-min-input" min="0" max="99" value="25"> <span>min</span>
+            <input type="number" class="timer-input" id="focus-min-input" min="0" max="99" value="25"> <span>分</span>
             <input type="number" class="timer-input" id="focus-sec-input" min="0" max="45" step="15" value="0">
-            <span>sec</span>
+            <span>秒</span>
           </div>
         </div>
         <div class="setting-group">
-          <label>Break Time:</label>
+          <label>休憩時間:</label>
           <div class="input-pair">
-            <input type="number" class="timer-input" id="break-min-input" min="0" max="99" value="5"> <span>min</span>
+            <input type="number" class="timer-input" id="break-min-input" min="0" max="99" value="5"> <span>分</span>
             <input type="number" class="timer-input" id="break-sec-input" min="0" max="45" step="15" value="0">
-            <span>sec</span>
+            <span>秒</span>
           </div>
         </div>
       </div>
       <div class="modal-actions">
-        <button id="btn-apply-settings" class="preset-btn">Apply & Close</button>
-        <button id="btn-cancel-settings" class="preset-btn secondary">Cancel</button>
+        <button id="btn-apply-settings" class="preset-btn">適用して閉じる</button>
+        <button id="btn-cancel-settings" class="preset-btn secondary">キャンセル</button>
       </div>
     </div>
   </div>
@@ -163,18 +162,18 @@
   <div id="timer-modal" class="modal-overlay hidden">
     <div class="modal-content">
       <h3 id="modal-title">Time's Up!</h3>
-      <p id="modal-message">Good work! Time for a break.</p>
-      <button id="modal-close-btn" class="preset-btn">Close</button>
+      <p id="modal-message">お疲れ様です！休憩しましょう。</p>
+      <button id="modal-close-btn" class="preset-btn">閉じる</button>
     </div>
   </div>
 
   <footer class="app-footer">
-    <a href="./about.html" class="link-btn">About</a>
-    <a href="./howto.html" class="link-btn">How to Use</a>
-    <a href="./contact.html" class="link-btn">Contact</a>
+    <a href="../about.html" class="link-btn">About</a>
+    <a href="../howto.html" class="link-btn">使い方</a>
+    <a href="../contact.html" class="link-btn">Contact</a>
     <button id="btn-open-legal" class="link-btn">Privacy Policy</button>
-    <a href="./news/index.html" class="link-btn">News</a>
-    <a href="./blog/index.html" class="link-btn">Blog</a>
+    <a href="../news/index.html" class="link-btn">News</a>
+    <a href="../blog/index.html" class="link-btn">Blog</a>
     <p>© 2026 AliceIndex</p>
   </footer>
 
@@ -183,39 +182,39 @@
       <div id="legal-text-area">
         <h3>Privacy Policy & Info</h3>
         <section class="legal-text-card">
-          <h4>About This Site</h4>
-          <p>Focus Mixer is a Pomodoro timer and ambient sound mixer designed to boost your concentration.</p>
-          <p>Developer: AliceIndex</p>
+          <h4>当サイトについて</h4>
+          <p>Focus Mixerは、集中力を高めるためのポモドーロタイマーと環境音ミキサーを提供しています。</p>
+          <p>開発：AliceIndex</p>
         </section>
         <section class="legal-text-card">
-          <h4>About Advertisements</h4>
-          <p>This site uses Google AdSense, a third-party ad service.</p>
-          <p>Ad providers may use cookies to show personalized ads based on your interests.</p>
-          <p>You can disable personalized ads in your Google ad settings.</p>
+          <h4>広告の配信について</h4>
+          <p>当サイトでは、第三者配信の広告サービス「Google AdSense」を利用しています。</p>
+          <p>広告配信事業者は、ユーザーの興味に応じた広告を表示するためにCookie（クッキー）を使用することがあります。</p>
+          <p>ユーザーは広告設定でパーソナライズ広告を無効にできます。</p>
         </section>
         <section class="legal-text-card">
-          <h4>Disclaimer</h4>
-          <p>The developer is not liable for any damages arising from use of this site.</p>
-          <p>Use at your own risk.</p>
+          <h4>免責事項</h4>
+          <p>当サイトの利用により生じた損害等について、開発者は一切の責任を負いません。</p>
+          <p>自己責任での利用をお願いいたします。</p>
         </section>
         <section class="legal-text-card">
-          <h4>Contact</h4>
-          <p>For feedback or bug reports: contact@focusmixer.com</p>
+          <h4>お問い合わせ</h4>
+          <p>ご意見・不具合報告は contact@focusmixer.com までお願いいたします。</p>
         </section>
       </div>
-      <button id="btn-close-legal" class="preset-btn">Close</button>
+      <button id="btn-close-legal" class="preset-btn">閉じる</button>
     </div>
   </div>
 
   <div id="cookie-banner" class="cookie-banner hidden">
     <div class="cookie-content">
       <p>
-        This site uses cookies to improve services and deliver ads.
-        See our <button id="btn-open-legal-from-cookie" class="inline-link">Privacy Policy</button> for details.
+        当サイトでは、サービスの向上および広告配信のためにクッキーを使用しています。
+        詳細は<button id="btn-open-legal-from-cookie" class="inline-link">プライバシーポリシー</button>をご確認ください。
       </p>
       <div class="cookie-actions">
-        <button id="btn-accept-cookie" class="primary-btn">Accept</button>
-        <button id="btn-decline-cookie" class="secondary-btn">Decline</button>
+        <button id="btn-accept-cookie" class="primary-btn">同意する</button>
+        <button id="btn-decline-cookie" class="secondary-btn">同意しない</button>
       </div>
     </div>
   </div>

@@ -6,18 +6,53 @@
 
 const CURRENT_VERSION = '3bf635a';
 
+// ==========================================
+// i18n: 言語検出と文字列定義
+// ==========================================
+const LANG = document.documentElement.lang === 'ja' ? 'ja' : 'en';
+
+const i18n = {
+    ja: {
+        cookieAccepted: 'クッキーの使用に同意しました 🍪',
+        cookieDeclined: 'クッキーの使用を拒否しました 🛡️',
+        muteAll: 'すべての音をミュートしました 🔇',
+        presetSaved: '設定を保存しました 💾',
+        presetNotFound: '保存された設定がありません ⚠️',
+        presetLoaded: '設定を読み込みました 🎶',
+        timerRestorePrompt: '保存されたタイマー設定を読み込みますか？ ⏱️',
+        timerRestored: 'タイマー設定を復元しました ✅',
+        breakStart: 'お疲れ様です！休憩しましょう。',
+        focusStart: 'さあ！集中しましょう。',
+        yesBtn: 'はい',
+        noBtn: 'いいえ',
+    },
+    en: {
+        cookieAccepted: 'Cookie consent accepted 🍪',
+        cookieDeclined: 'Cookie usage declined 🛡️',
+        muteAll: 'All sounds muted 🔇',
+        presetSaved: 'Preset saved 💾',
+        presetNotFound: 'No saved preset found ⚠️',
+        presetLoaded: 'Preset loaded 🎶',
+        timerRestorePrompt: 'Restore saved timer settings? ⏱️',
+        timerRestored: 'Timer settings restored ✅',
+        breakStart: 'Good work! Time for a break.',
+        focusStart: "Let's focus!",
+        yesBtn: 'Yes',
+        noBtn: 'No',
+    }
+};
+
+const t = i18n[LANG] || i18n.ja;
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // ==========================================
     // 0. クッキー同意管理
     // ==========================================
-    // --- クッキー同意管理 ---
     const cookieBanner = document.getElementById('cookie-banner');
     const btnAcceptCookie = document.getElementById('btn-accept-cookie');
     const btnDeclineCookie = document.getElementById('btn-decline-cookie');
 
-    // 1. 同意ステータスの確認
-    // 'accepted' または 'declined' が保存されていれば表示しない
     const consentStatus = localStorage.getItem('cookie-consent');
     if (!consentStatus) {
         setTimeout(() => {
@@ -25,20 +60,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    // 2. 「同意する」ボタン
     addDebouncedClick(btnAcceptCookie, () => {
         localStorage.setItem('cookie-consent', 'accepted');
         cookieBanner.classList.add('hidden');
-        showToast('クッキーの使用に同意しました 🍪');
-        // ここでAdSenseのスクリプトをロードする等の処理を将来的に追加
+        showToast(t.cookieAccepted);
     });
 
-    // 3. 「同意しない」ボタン
     addDebouncedClick(btnDeclineCookie, () => {
         localStorage.setItem('cookie-consent', 'declined');
         cookieBanner.classList.add('hidden');
-        showToast('クッキーの使用を拒否しました 🛡️');
-        // 非同意の場合はパーソナライズ広告を無効にするなどの配慮を行う
+        showToast(t.cookieDeclined);
     });
 
     // ==========================================
@@ -46,20 +77,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const SOUND_LIST = [
         // Page 1: Nature
-        { id: 'rain', label: '雨音', icon: '🌧️', file: 'rain.ogg', category: 'nature' },
-        { id: 'bonfire', label: '焚き火', icon: '🔥', file: 'bonfire.ogg', category: 'nature' },
-        { id: 'waves', label: '波打ち際', icon: '🌊', file: 'waves.ogg', category: 'nature' },
-        { id: 'birds', label: '野鳥', icon: '🐦', file: 'birds-opt.ogg', category: 'nature' },
+        { id: 'rain',    label: { ja: '雨音',      en: 'Rain'        }, icon: '🌧️', file: 'rain.ogg',       category: 'nature' },
+        { id: 'bonfire', label: { ja: '焚き火',    en: 'Bonfire'     }, icon: '🔥', file: 'bonfire.ogg',    category: 'nature' },
+        { id: 'waves',   label: { ja: '波打ち際',  en: 'Waves'       }, icon: '🌊', file: 'waves.ogg',      category: 'nature' },
+        { id: 'birds',   label: { ja: '野鳥',      en: 'Birds'       }, icon: '🐦', file: 'birds-opt.ogg',  category: 'nature' },
         // Page 2: Ambient & Tech
-        { id: 'server', label: 'サーバー室', icon: '🖥️', file: 'server.ogg', category: 'tech' },
-        { id: 'cafe', label: 'カフェ', icon: '☕', file: 'cafe-opt.ogg', category: 'tech' },
-        { id: 'train', label: '電車内', icon: '🚃', file: 'train.ogg', category: 'tech' },
-        { id: 'fan', label: '換気扇', icon: '🌀', file: 'fan.ogg', category: 'tech' },
+        { id: 'server',  label: { ja: 'サーバー室', en: 'Server Room' }, icon: '🖥️', file: 'server.ogg',     category: 'tech' },
+        { id: 'cafe',    label: { ja: 'カフェ',    en: 'Cafe'        }, icon: '☕', file: 'cafe-opt.ogg',   category: 'tech' },
+        { id: 'train',   label: { ja: '電車内',    en: 'Train'       }, icon: '🚃', file: 'train.ogg',      category: 'tech' },
+        { id: 'fan',     label: { ja: '換気扇',    en: 'Fan'         }, icon: '🌀', file: 'fan.ogg',        category: 'tech' },
         // Page 3: Focus
-        { id: 'white', label: 'White', icon: '⚪', file: 'white-opt.ogg', category: 'focus' },
-        { id: 'pink', label: 'Pink', icon: '🌸', file: 'pink-opt.ogg', category: 'focus' },
-        { id: 'brown', label: 'Brown', icon: '🟤', file: 'brown-opt.ogg', category: 'focus' },
-        { id: 'clock', label: '時計', icon: '⏱️', file: 'clock.ogg', category: 'focus' }
+        { id: 'white',   label: { ja: 'White',     en: 'White Noise' }, icon: '⚪', file: 'white-opt.ogg',  category: 'focus' },
+        { id: 'pink',    label: { ja: 'Pink',      en: 'Pink Noise'  }, icon: '🌸', file: 'pink-opt.ogg',   category: 'focus' },
+        { id: 'brown',   label: { ja: 'Brown',     en: 'Brown Noise' }, icon: '🟤', file: 'brown-opt.ogg',  category: 'focus' },
+        { id: 'clock',   label: { ja: '時計',      en: 'Clock'       }, icon: '⏱️', file: 'clock.ogg',      category: 'focus' }
     ];
 
     // ==========================================
@@ -78,13 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnPause = document.getElementById('btn-pause');
     const btnReset = document.getElementById('btn-reset');
 
-    // カルーセル関連
     const slider = document.getElementById('mixer-slider');
     const dots = document.querySelectorAll('.dot');
     const btnPrev = document.getElementById('prev-page');
     const btnNext = document.getElementById('next-page');
 
-    // モーダル・その他
     const settingsModal = document.getElementById('settings-modal');
     const btnSettingsOpen = document.getElementById('settings-toggle');
     const btnApplySettings = document.getElementById('btn-apply-settings');
@@ -99,12 +128,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const legalModal = document.getElementById('legal-modal');
     const btnOpenLegal = document.getElementById('btn-open-legal');
     const btnCloseLegal = document.getElementById('btn-close-legal');
-    const bellSound = new Audio('./assets/sounds/bell.ogg');
+    const bellSound = new Audio('/assets/sounds/bell.ogg');
 
-    // Web Audio API
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     const btnMuteAll = document.getElementById('btn-mute-all');
-    let audioCtx = null; // ユーザー操作まで未初期化
+    let audioCtx = null;
     const audioBuffers = {};
     const audioSources = {};
     const gainNodes = {};
@@ -121,12 +149,11 @@ document.addEventListener('DOMContentLoaded', () => {
             item.className = 'sound-item';
             item.innerHTML = `
                 <div class="sound-icon">${sound.icon}</div>
-                <label>${sound.label}</label>
+                <label>${sound.label[LANG] || sound.label.ja}</label>
                 <input type="range" class="volume-slider" data-sound="${sound.id}" min="0" max="100" value="0">
             `;
             grid.appendChild(item);
 
-            // スライダーにイベント登録
             const sliderInput = item.querySelector('input');
             sliderInput.addEventListener('input', (e) => handleVolumeInput(e, sound.id));
         });
@@ -136,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. カルーセル（スライド）制御
     // ==========================================
     function updateSlider() {
-        const offset = currentPage * -33.3333; // 3ページなので
+        const offset = currentPage * -33.3333;
         slider.style.transform = `translateX(${offset}%)`;
         dots.forEach((dot, index) => {
             dot.classList.toggle('active', index === currentPage);
@@ -158,10 +185,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (audioCtx) return;
         audioCtx = new AudioContext();
 
-        // 全音源を並列でプリロード
         const loadPromises = SOUND_LIST.map(async (sound) => {
             try {
-                const response = await fetch(`./assets/sounds/${sound.file}`);
+                const response = await fetch(`/assets/sounds/${sound.file}`);
                 const arrayBuffer = await response.arrayBuffer();
                 audioBuffers[sound.id] = await audioCtx.decodeAudioData(arrayBuffer);
 
@@ -170,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 gainNode.connect(audioCtx.destination);
                 gainNodes[sound.id] = gainNode;
             } catch (e) {
-                console.error(`音源ロード失敗: ${sound.id}`, e);
+                console.error(`Sound load failed: ${sound.id}`, e);
             }
         });
         await Promise.all(loadPromises);
@@ -187,7 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const volume = e.target.value / 100;
         if (!gainNodes[id]) return;
 
-        // ノイズ防止のため緩やかに音量変更
         gainNodes[id].gain.setTargetAtTime(volume, audioCtx.currentTime, 0.05);
 
         if (volume > 0 && !audioSources[id]) {
@@ -207,25 +232,21 @@ document.addEventListener('DOMContentLoaded', () => {
         SOUND_LIST.forEach(sound => {
             const id = sound.id;
 
-            // 1. スライダーの表示を0にする
             const input = document.querySelector(`input[data-sound="${id}"]`);
             if (input) {
                 input.value = 0;
             }
 
-            // 2. Web Audio APIの音量をフェードアウト（ノイズ防止）
             if (audioCtx && gainNodes[id]) {
-                // 0.1秒かけて滑らかに消す
                 gainNodes[id].gain.setTargetAtTime(0, audioCtx.currentTime, 0.05);
             }
 
-            // 3. 再生リソースを解放する
             if (audioSources[id]) {
                 audioSources[id].stop();
                 audioSources[id] = null;
             }
         });
-        showToast('すべての音をミュートしました 🔇');
+        showToast(t.muteAll);
     });
 
     // ==========================================
@@ -298,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     addDebouncedClick(btnCloseTimer, () => {
-        modalMessage.textContent = isFocusMode ? "お疲れ様です！休憩しましょう。" : "さあ！集中しましょう。";
+        modalMessage.textContent = isFocusMode ? t.breakStart : t.focusStart;
         timerModal.classList.add('hidden');
     });
 
@@ -311,19 +332,18 @@ document.addEventListener('DOMContentLoaded', () => {
             preset[s.dataset.sound] = s.value;
         });
         localStorage.setItem('focusMixerPreset', JSON.stringify(preset));
-        showToast('設定を保存しました 💾');
+        showToast(t.presetSaved);
     });
 
     addDebouncedClick(document.getElementById('btn-load'), async () => {
         const saved = localStorage.getItem('focusMixerPreset');
         if (!saved) {
-            showToast('保存された設定がありません ⚠️');
+            showToast(t.presetNotFound);
             return;
         }
 
-        // 1. ユーザーのクリック操作直後に AudioContext を確実に初期化・再開
         if (!audioCtx) {
-            await initAudio(); // 音源のロードとコンテキスト作成
+            await initAudio();
         }
         if (audioCtx.state === 'suspended') {
             await audioCtx.resume();
@@ -331,36 +351,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const preset = JSON.parse(saved);
 
-        // 2. 各音源の設定を復元
         SOUND_LIST.forEach(sound => {
             const volume = preset[sound.id];
             if (volume !== undefined) {
-                // スライダーの見た目を更新
                 const input = document.querySelector(`input[data-sound="${sound.id}"]`);
                 if (input) {
                     input.value = volume;
                 }
-
-                // 音量適用と再生開始ロジックを直接呼び出す
-                // dispatchEventを使わず、定義済みの handleVolumeInput を直接叩くのが確実です
                 applyVolumeFromPreset(sound.id, volume / 100);
             }
         });
 
-        showToast('設定を読み込みました 🎶');
+        showToast(t.presetLoaded);
     }, 1000);
 
-    /**
-     * プリセットからの適用専用関数
-     * handleVolumeInput と同様のロジックを、イベントオブジェクトなしで実行
-     */
     function applyVolumeFromPreset(id, volume) {
         if (!gainNodes[id]) return;
 
-        // 音量の適用
         gainNodes[id].gain.setTargetAtTime(volume, audioCtx.currentTime, 0.05);
 
-        // 再生状態の制御
         if (volume > 0 && !audioSources[id]) {
             const source = audioCtx.createBufferSource();
             source.buffer = audioBuffers[id];
@@ -383,8 +392,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'Focus Mixer',
             artist: 'Focus Mixer Team',
             artwork: [
-                { src: './assets/images/web-app-manifest-192x192.png', sizes: '192x192', type: 'image/png' },
-                { src: './assets/images/web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png' }
+                { src: '/assets/images/web-app-manifest-192x192.png', sizes: '192x192', type: 'image/png' },
+                { src: '/assets/images/web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png' }
             ]
         });
         navigator.mediaSession.setActionHandler('play', () => {
@@ -427,17 +436,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 8. 規約用モーダル
     // ==========================================
-    // モーダルを開く
     addDebouncedClick(btnOpenLegal, () => {
         legalModal.classList.remove('hidden');
     });
 
-    // モーダルを閉じる
     addDebouncedClick(btnCloseLegal, () => {
         legalModal.classList.add('hidden');
     });
 
-    // 背景クリックで閉じる（おまけのUX向上）
     legalModal.addEventListener('click', (e) => {
         if (e.target === legalModal) {
             legalModal.classList.add('hidden');
@@ -447,8 +453,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 9. 通知・ユーティリティ
     // ==========================================
-
-    // 指定したメッセージを画面右上に通知として表示
     function showToast(message) {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
@@ -457,13 +461,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         container.appendChild(toast);
 
-        // 3秒後に要素をDOMから完全に削除
         setTimeout(() => {
             toast.remove();
         }, 3000);
     }
 
-    // はい/いいえボタン付き確認トースト
     function showConfirmToast(message, onConfirm) {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
@@ -471,8 +473,8 @@ document.addEventListener('DOMContentLoaded', () => {
         toast.innerHTML = `
             <span>${message}</span>
             <div class="toast-actions">
-                <button class="btn-toast-yes">はい</button>
-                <button class="btn-toast-no">いいえ</button>
+                <button class="btn-toast-yes">${t.yesBtn}</button>
+                <button class="btn-toast-no">${t.noBtn}</button>
             </div>
         `;
         container.appendChild(toast);
@@ -481,11 +483,9 @@ document.addEventListener('DOMContentLoaded', () => {
         addDebouncedClick(toast.querySelector('.btn-toast-yes'), () => { onConfirm(); cleanup(); });
         addDebouncedClick(toast.querySelector('.btn-toast-no'), cleanup);
 
-        // 8秒後に自動消滅（無操作時）
         setTimeout(cleanup, 8000);
     }
 
-    // ボタンの連打防止ラッパー
     function addDebouncedClick(element, handler, delay = 500) {
         let busy = false;
         element.addEventListener('click', async (e) => {
@@ -508,14 +508,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const data = JSON.parse(saved);
-            showConfirmToast('保存されたタイマー設定を読み込みますか？ ⏱️', () => {
+            showConfirmToast(t.timerRestorePrompt, () => {
                 focusTotalSeconds = data.focus;
                 breakTotalSeconds = data.break;
                 resetTimer();
-                showToast('タイマー設定を復元しました ✅');
+                showToast(t.timerRestored);
             });
         } catch (e) {
-            console.error('タイマー設定の読み込み失敗', e);
+            console.error('Timer settings restore failed', e);
         }
     }
 });
