@@ -134,6 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const audioSources = {};
     const gainNodes = {};
 
+    let wakeLock = null;
+
     // ==========================================
     // 3. UIの動的生成
     // ==========================================
@@ -223,6 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
             audioSources[id].stop();
             audioSources[id] = null;
         }
+        updateWakeLock();
     }
 
     addDebouncedClick(btnMuteAll, () => {
@@ -243,8 +246,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 audioSources[id] = null;
             }
         });
+        updateWakeLock();
         showToast(t.muteAll);
     });
+
+    // ==========================================
+    // 5c. Screen Wake Lock（スリープ防止）
+    // ==========================================
+    function isActiveSession() {
+        if (timerInterval !== null) return true;
+        for (const id in audioSources) {
+            if (audioSources[id]) return true;
+        }
+        return false;
+    }
+
+    async function requestWakeLock() {
+        if (!('wakeLock' in navigator)) return;
+        if (wakeLock !== null) return;
+        try {
+            wakeLock = await navigator.wakeLock.request('screen');
+            wakeLock.addEventListener('release', () => {
+                wakeLock = null;
+            });
+        } catch (err) {
+            console.error('Wake Lock request failed:', err);
+        }
+    }
+
+    async function releaseWakeLock() {
+        if (wakeLock === null) return;
+        try {
+            await wakeLock.release();
+        } catch (err) {
+            console.error('Wake Lock release failed:', err);
+        }
+        wakeLock = null;
+    }
+
+    function updateWakeLock() {
+        if (isActiveSession()) {
+            requestWakeLock();
+        } else {
+            releaseWakeLock();
+        }
+    }
 
     // ==========================================
     // 6. タイマー動作・時間設定モーダル
@@ -263,6 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
         timeLeft = focusTotalSeconds;
         modeDisplay.textContent = "Focus Time";
         updateDisplay();
+        updateWakeLock();
     }
 
     addDebouncedClick(btnStart, () => {
@@ -279,11 +326,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateDisplay();
                 bellSound.play();
                 timerModal.classList.remove('hidden');
+                updateWakeLock();
             }
         }, 1000);
+        updateWakeLock();
     });
 
-    addDebouncedClick(btnPause, () => { clearInterval(timerInterval); timerInterval = null; });
+    addDebouncedClick(btnPause, () => {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        updateWakeLock();
+    });
 
     addDebouncedClick(btnReset, () => {
         resetTimer();
@@ -378,6 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
             audioSources[id].stop();
             audioSources[id] = null;
         }
+        updateWakeLock();
     }
 
     // ==========================================
@@ -405,6 +459,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && isActiveSession()) {
+            requestWakeLock();
+        }
+
         if (!audioCtx) return;
         if (document.visibilityState === 'hidden') {
             SOUND_LIST.forEach(sound => {
