@@ -99,9 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let focusTotalSeconds = 25 * 60;
     let breakTotalSeconds = 5 * 60;
     let timeLeft = focusTotalSeconds;
-    let timerInterval = null;
+    let timerRunning = false;
     let isFocusMode = true;
     let currentPage = 0;
+
+    const timerWorker = new Worker(`/static/script/timerWorker.js?v=${CURRENT_VERSION}`);
 
     const timeDisplay = document.getElementById('time-display');
     const modeDisplay = document.getElementById('timer-mode');
@@ -135,6 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const gainNodes = {};
 
     let wakeLock = null;
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
     // ==========================================
     // 3. UIの動的生成
@@ -180,6 +185,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 5. 音響エンジン (Web Audio API)
     // ==========================================
+    function createAudibleSilentWav() {
+        const sampleRate = 22050;
+        const duration = 30;
+        const numSamples = sampleRate * duration;
+        const buffer = new ArrayBuffer(44 + numSamples * 2);
+        const view = new DataView(buffer);
+        const writeString = (offset, str) => {
+            for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+        };
+        writeString(0, 'RIFF');
+        view.setUint32(4, 36 + numSamples * 2, true);
+        writeString(8, 'WAVE');
+        writeString(12, 'fmt ');
+        view.setUint32(16, 16, true);
+        view.setUint16(20, 1, true);
+        view.setUint16(22, 1, true);
+        view.setUint32(24, sampleRate, true);
+        view.setUint32(28, sampleRate * 2, true);
+        view.setUint16(32, 2, true);
+        view.setUint16(34, 16, true);
+        writeString(36, 'data');
+        view.setUint32(40, numSamples * 2, true);
+        let offset = 44;
+        for (let i = 0; i < numSamples; i++) {
+            const sample = Math.floor((Math.random() - 0.5) * 16);
+            view.setInt16(offset, sample, true);
+            offset += 2;
+        }
+        return new Blob([buffer], { type: 'audio/wav' });
+    }
+
+    const silentTrackEl = document.getElementById('silent-track');
+    silentTrackEl.src = URL.createObjectURL(createAudibleSilentWav());
+
     async function initAudio() {
         if (audioCtx) return;
         audioCtx = new AudioContext();
@@ -201,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
         await Promise.all(loadPromises);
 
         await audioCtx.resume();
-        document.getElementById('silent-track').play().catch(() => { });
+        silentTrackEl.play().catch(() => { });
         updateMediaSession();
     }
 
@@ -254,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5c. Screen Wake Lock（スリープ防止）
     // ==========================================
     function isActiveSession() {
-        if (timerInterval !== null) return true;
+        if (timerRunning) return true;
         for (const id in audioSources) {
             if (audioSources[id]) return true;
         }
@@ -303,8 +342,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function resetTimer() {
-        clearInterval(timerInterval);
-        timerInterval = null;
+        timerWorker.postMessage({ type: 'stop' });
+        timerRunning = false;
         isFocusMode = true;
         timeLeft = focusTotalSeconds;
         modeDisplay.textContent = "Focus Time";
@@ -312,29 +351,47 @@ document.addEventListener('DOMContentLoaded', () => {
         updateWakeLock();
     }
 
-    addDebouncedClick(btnStart, () => {
-        if (timerInterval) return;
-        timerInterval = setInterval(() => {
-            timeLeft--;
+    timerWorker.onmessage = (e) => {
+        const { type, remaining } = e.data || {};
+        if (type === 'tick') {
+            timeLeft = remaining;
             updateDisplay();
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-                isFocusMode = !isFocusMode;
-                timeLeft = isFocusMode ? focusTotalSeconds : breakTotalSeconds;
-                modeDisplay.textContent = isFocusMode ? "Focus Time" : "Break Time";
-                updateDisplay();
-                bellSound.play();
-                timerModal.classList.remove('hidden');
-                updateWakeLock();
-            }
-        }, 1000);
+        } else if (type === 'end') {
+            timerRunning = false;
+            isFocusMode = !isFocusMode;
+            timeLeft = isFocusMode ? focusTotalSeconds : breakTotalSeconds;
+            modeDisplay.textContent = isFocusMode ? "Focus Time" : "Break Time";
+            updateDisplay();
+            bellSound.play().catch(() => { });
+            timerModal.classList.remove('hidden');
+            updateWakeLock();
+        }
+    };
+
+    addDebouncedClick(btnStart, () => {
+        if (timerRunning) return;
+        timerRunning = true;
+        timerWorker.postMessage({ type: 'start', duration: timeLeft });
+        silentTrackEl.play().catch(() => { });
+        if (!audioCtx) {
+            initAudio();
+        } else if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        if ('mediaSession' in navigator) {
+            if (!navigator.mediaSession.metadata) updateMediaSession();
+            navigator.mediaSession.playbackState = 'playing';
+        }
         updateWakeLock();
     });
 
     addDebouncedClick(btnPause, () => {
-        clearInterval(timerInterval);
-        timerInterval = null;
+        if (!timerRunning) return;
+        timerWorker.postMessage({ type: 'pause' });
+        timerRunning = false;
+        if ('mediaSession' in navigator && !isActiveSession()) {
+            navigator.mediaSession.playbackState = 'paused';
+        }
         updateWakeLock();
     });
 
@@ -440,8 +497,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateMediaSession() {
         if (!('mediaSession' in navigator)) return;
         navigator.mediaSession.metadata = new MediaMetadata({
-            title: 'Focus Mixer',
-            artist: 'Focus Mixer Team',
+            title: 'Focus Mixer - Deep Work',
+            artist: 'Pomodoro Timer',
             artwork: [
                 { src: '/assets/images/web-app-manifest-192x192.png', sizes: '192x192', type: 'image/png' },
                 { src: '/assets/images/web-app-manifest-512x512.png', sizes: '512x512', type: 'image/png' }
@@ -450,10 +507,10 @@ document.addEventListener('DOMContentLoaded', () => {
         navigator.mediaSession.setActionHandler('play', () => {
             if (audioCtx) audioCtx.resume();
             document.getElementById('silent-track').play().catch(() => { });
-            if (!timerInterval) btnStart.click();
+            if (!timerRunning) btnStart.click();
         });
         navigator.mediaSession.setActionHandler('pause', () => {
-            if (timerInterval) btnPause.click();
+            if (timerRunning) btnPause.click();
             if (audioCtx) audioCtx.suspend();
         });
     }
@@ -464,6 +521,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!audioCtx) return;
+        if (!isIOS) return;
+
         if (document.visibilityState === 'hidden') {
             SOUND_LIST.forEach(sound => {
                 const input = document.querySelector(`input[data-sound="${sound.id}"]`);
