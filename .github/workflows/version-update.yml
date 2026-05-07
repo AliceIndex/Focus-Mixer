@@ -54,12 +54,12 @@ jobs:
             echo "Updated blog.css version in HTML files."
           fi
 
-          if echo "$CHANGED_FILES" | grep -q "script.js"; then
-            sed -i "s/script.js?v=[^\"]*/script.js?v=$VERSION/g" ./*.html
-            sed -i "s/script.js?v=[^\"]*/script.js?v=$VERSION/g" ./jp/*.html
-            # script.js 本体の内部バージョンも更新してlocalStorageを制御
-            sed -i "s/const CURRENT_VERSION = '[^']*'/const CURRENT_VERSION = '$VERSION'/g" ./static/script/script.js
-            echo "Updated script.js version and internal constant."
+          if echo "$CHANGED_FILES" | grep -qE "static/script/.*\.js"; then
+            sed -i "s/main.js?v=[^\"]*/main.js?v=$VERSION/g" ./*.html
+            sed -i "s/main.js?v=[^\"]*/main.js?v=$VERSION/g" ./jp/*.html
+            # main.js 本体の内部バージョンも更新（timerWorker のキャッシュバスティングに使用）
+            sed -i "s/const CURRENT_VERSION = '[^']*'/const CURRENT_VERSION = '$VERSION'/g" ./static/script/main.js
+            echo "Updated main.js version and internal constant."
           fi
 
       - name: Commit and Push
