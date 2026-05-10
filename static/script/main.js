@@ -34,7 +34,7 @@ import {
     getIsFocusMode
 } from './timerController.js';
 
-const CURRENT_VERSION = 'f474caa';
+const CURRENT_VERSION = 'dd03cc3';
 
 document.addEventListener('DOMContentLoaded', () => {
 
