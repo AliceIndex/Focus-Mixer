@@ -20,7 +20,6 @@ import {
     applyVolumeFromPreset,
     muteAll,
     isAudioPlaying,
-    handleVisibilityChangeForIOS,
     setMediaSessionHandlers,
     resumeContext
 } from './audioController.js';
@@ -220,14 +219,13 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
     // ==========================================
-    // 9. Visibility Change （Wake Lock 復帰 / iOS ノイズ対策）
+    // 9. Visibility Change （Wake Lock 復帰）
     // ==========================================
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible' &&
             (isTimerRunning() || isAudioPlaying())) {
             requestWakeLock();
         }
-        handleVisibilityChangeForIOS();
     });
 
     // ==========================================
