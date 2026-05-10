@@ -5,7 +5,7 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  */
 
-import { isIOS, updateWakeLock } from './uiController.js';
+import { updateWakeLock } from './uiController.js';
 
 export const SOUND_LIST = [
     // Page 1: Nature
@@ -28,6 +28,7 @@ export const SOUND_LIST = [
 const AudioContextClass = window.AudioContext || window.webkitAudioContext;
 
 let audioCtx = null;
+let streamDest = null;
 const audioBuffers = {};
 const audioSources = {};
 const gainNodes = {};
@@ -69,9 +70,38 @@ function createAudibleSilentWav() {
 const silentTrackEl = document.getElementById('silent-track');
 silentTrackEl.src = URL.createObjectURL(createAudibleSilentWav());
 
+// [Issue 15] Safari バックグラウンド再生用の追加 <audio> 要素を動的生成。
+// silent-track は WAV ブロブ src で Chrome のグローバルメディアコントロール検出に使い続け、
+// stream-output は MediaStreamDestination の srcObject 受け口として Safari の AudioContext を生存させる。
+const streamOutputEl = document.createElement('audio');
+streamOutputEl.id = 'stream-output';
+streamOutputEl.setAttribute('playsinline', '');
+streamOutputEl.setAttribute('webkit-playsinline', '');
+streamOutputEl.style.display = 'none';
+document.body.appendChild(streamOutputEl);
+
 export async function initAudio() {
     if (audioCtx) return;
     audioCtx = new AudioContextClass();
+
+    // [Issue 15] Web Audio 出力を MediaStreamDestination 経由で stream-output 要素にルーティング
+    // Safari でバックグラウンド／画面ロック時も AudioContext がサスペンドされないようにする。
+    // silent-track は WAV ブロブ src のまま維持し、Chrome の URL バーメディアコントロール検出に使う。
+    streamDest = audioCtx.createMediaStreamDestination();
+    streamOutputEl.srcObject = streamDest.stream;
+    streamOutputEl.play().catch(() => { });
+
+    // ストリームに常時微小ノイズを流し、stream-output を「audible」として維持
+    const noiseBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate, audioCtx.sampleRate);
+    const noiseData = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < noiseData.length; i++) {
+        noiseData[i] = (Math.random() - 0.5) * 0.0005;
+    }
+    const noiseSource = audioCtx.createBufferSource();
+    noiseSource.buffer = noiseBuffer;
+    noiseSource.loop = true;
+    noiseSource.connect(streamDest);
+    noiseSource.start(0);
 
     const loadPromises = SOUND_LIST.map(async (sound) => {
         try {
@@ -81,7 +111,7 @@ export async function initAudio() {
 
             const gainNode = audioCtx.createGain();
             gainNode.gain.value = 0;
-            gainNode.connect(audioCtx.destination);
+            gainNode.connect(streamDest);
             gainNodes[sound.id] = gainNode;
         } catch (e) {
             console.error(`Sound load failed: ${sound.id}`, e);
@@ -90,7 +120,6 @@ export async function initAudio() {
     await Promise.all(loadPromises);
 
     await audioCtx.resume();
-    silentTrackEl.play().catch(() => { });
     updateMediaSessionMetadata();
 }
 
@@ -166,6 +195,9 @@ export function isAudioPlaying() {
 
 export function playSilentTrack() {
     silentTrackEl.play().catch(() => { });
+    if (streamOutputEl.srcObject) {
+        streamOutputEl.play().catch(() => { });
+    }
 }
 
 export function resumeContext() {
@@ -182,29 +214,6 @@ export function ensureAudioStarted() {
         initAudio();
     } else {
         resumeContext();
-    }
-}
-
-export function handleVisibilityChangeForIOS() {
-    if (!audioCtx) return;
-    if (!isIOS) return;
-
-    if (document.visibilityState === 'hidden') {
-        SOUND_LIST.forEach(sound => {
-            const input = document.querySelector(`input[data-sound="${sound.id}"]`);
-            const volume = input ? parseFloat(input.value) / 100 : 0;
-            if (gainNodes[sound.id] && volume > 0) {
-                gainNodes[sound.id].gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-            }
-        });
-    } else {
-        SOUND_LIST.forEach(sound => {
-            const input = document.querySelector(`input[data-sound="${sound.id}"]`);
-            const volume = input ? parseFloat(input.value) / 100 : 0;
-            if (gainNodes[sound.id] && volume > 0) {
-                gainNodes[sound.id].gain.exponentialRampToValueAtTime(volume, audioCtx.currentTime + 0.2);
-            }
-        });
     }
 }
 
