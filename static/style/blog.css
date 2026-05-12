@@ -4,6 +4,79 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  */
 
+/* ========================================
+ * Page layout (blog pages standalone — about.css 非依存)
+ * ======================================== */
+.about-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    line-height: 1.8;
+    color: var(--text-color);
+}
+
+.about-section {
+    background: var(--bg-color);
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.about-section h2 {
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.about-section h3 {
+    color: var(--text-color);
+    margin-top: 20px;
+    font-size: 1.1rem;
+}
+
+.about-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.about-section p + p {
+    margin-top: 12px;
+}
+
+.back-nav {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.highlight {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+blockquote {
+    border-left: 4px solid var(--primary-color);
+    margin: 20px 0;
+    padding: 10px 20px;
+    background: rgba(100, 255, 218, 0.05);
+    font-style: italic;
+}
+
+.page-footer {
+    text-align: center;
+}
+
+.footer-copy {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* ========================================
+ * Blog listing cards (blog/index.html)
+ * ======================================== */
 .blog-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -27,6 +100,11 @@
 .blog-card:hover {
     border-color: rgba(100, 255, 218, 0.5);
     box-shadow: 0 4px 20px rgba(100, 255, 218, 0.08);
+}
+
+.blog-card-link {
+    text-decoration: none;
+    color: inherit;
 }
 
 .blog-card-tag {
@@ -67,6 +145,78 @@
     vertical-align: middle;
 }
 
-.about-section p + p {
-    margin-top: 12px;
+/* ========================================
+ * Blog article page (blog/[UID].html)
+ * ======================================== */
+.article-meta {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+}
+
+.article-content {
+    line-height: 1.8;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4 {
+    color: var(--text-main);
+    margin-top: 24px;
+    margin-bottom: 12px;
+    border: 0px;
+}
+
+.article-content p {
+    margin-bottom: 16px;
+}
+
+.article-content a {
+    color: var(--primary-color);
+}
+
+.article-content ul,
+.article-content ol {
+    padding-left: 20px;
+    margin-bottom: 16px;
+}
+
+.article-content code {
+    background: rgba(100, 255, 218, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.article-content pre {
+    background: rgba(100, 255, 218, 0.06);
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 16px;
+}
+
+.article-content pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.article-content img {
+    max-width: 60%;
+    height: auto;
+}
+
+/* ========================================
+ * Dynamic list states
+ * ======================================== */
+.list-empty,
+.list-error {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 20px;
+}
+
+.list-error {
+    color: #ff8a80;
 }

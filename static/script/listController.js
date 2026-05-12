@@ -67,14 +67,14 @@
             ? `<p>${escapeHtml(article.excerpt)}</p>`
             : '';
         return `
-            <div class="news-entry">
+            <a href="${escapeHtml(article.url)}" class="news-entry">
                 <div class="news-date">${escapeHtml(formatDate(article))}</div>
                 <div class="news-body">
                     ${tagHtml}
-                    <h3><a href="${escapeHtml(article.url)}" class="link-btn">${escapeHtml(article.title)}</a></h3>
+                    <h3>${escapeHtml(article.title)}</h3>
                     ${excerpt}
                 </div>
-            </div>
+            </a>
         `;
     }
 
