@@ -39,6 +39,7 @@
 
     <!-- scripts -->
     <script src="/static/script/theme.js"></script>
+    <script src="/static/script/listController.js" defer></script>
 
     <!-- adsense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7365336492579910"
@@ -64,49 +65,7 @@
 
         <section class="about-section">
             <h2>記事一覧</h2>
-            <div class="blog-grid">
-                <div class="blog-card">
-                    <span class="blog-card-tag">Web Audio API</span>
-                    <div class="blog-card-title">
-                        Web Audio APIで作る環境音ミキサー — 設計と実装の全記録
-                        <span class="coming-soon-badge">近日公開</span>
-                    </div>
-                    <div class="blog-card-desc">
-                        ブラウザ標準APIのみで高品質な環境音ミキサーを実現する方法を解説。
-                        AudioContext、GainNode、ループ再生の実装パターン、
-                        モバイルのオートプレイ制限への対処法まで網羅します。
-                    </div>
-                    <div class="blog-card-date">2026年 公開予定</div>
-                </div>
-
-                <div class="blog-card">
-                    <span class="blog-card-tag">UIデザイン</span>
-                    <div class="blog-card-title">
-                        「引き算」のUI — ミニマリストツールのデザイン哲学
-                        <span class="coming-soon-badge">近日公開</span>
-                    </div>
-                    <div class="blog-card-desc">
-                        機能を削ぎ落とすことで生まれる集中体験。
-                        SFテイストのダークモードUIを構築する際に考えたCSSアーキテクチャ、
-                        カラーシステム、タイポグラフィの選定プロセスを紹介します。
-                    </div>
-                    <div class="blog-card-date">2026年 公開予定</div>
-                </div>
-
-                <div class="blog-card">
-                    <span class="blog-card-tag">インフラ・配信</span>
-                    <div class="blog-card-title">
-                        静的サイトでAudioを最適配信する — OGGとキャッシュ戦略
-                        <span class="coming-soon-badge">近日公開</span>
-                    </div>
-                    <div class="blog-card-desc">
-                        GitHub Pages上で12種類の音源ファイルを効率よく配信するために取り組んだ
-                        ファイルフォーマット選定（MP3→OGG変換）、ファイルサイズ最適化、
-                        ブラウザキャッシュの設計について解説します。
-                    </div>
-                    <div class="blog-card-date">2026年 公開予定</div>
-                </div>
-            </div>
+            <div id="list-container" class="blog-grid" data-list-type="blog"></div>
         </section>
 
         <section class="about-section">

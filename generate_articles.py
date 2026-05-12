@@ -49,16 +49,54 @@ def parse_front_matter(text):
             continue
         key, _, value = line.partition(':')
         value = value.strip()
-        if (value.startswith('"') and value.endswith('"')) or \
-           (value.startswith("'") and value.endswith("'")):
+        if value.startswith('[') and value.endswith(']'):
+            try:
+                value = json.loads(value)
+            except json.JSONDecodeError:
+                items = []
+                for s in value[1:-1].split(','):
+                    s = s.strip().strip('"').strip("'")
+                    if s:
+                        items.append(s)
+                value = items
+        elif (value.startswith('"') and value.endswith('"')) or \
+                (value.startswith("'") and value.endswith("'")):
             value = value[1:-1]
-        lowered = value.lower()
-        if lowered == 'true':
-            value = True
-        elif lowered == 'false':
-            value = False
+        else:
+            lowered = value.lower()
+            if lowered == 'true':
+                value = True
+            elif lowered == 'false':
+                value = False
         meta[key.strip()] = value
     return meta, body
+
+
+_MARKDOWN_STRIP_PATTERNS = [
+    (re.compile(r'```[^\n]*\n.*?\n```', re.DOTALL), ''),
+    (re.compile(r'`[^`]+`'), ''),
+    (re.compile(r'!\[[^\]]*\]\([^)]+\)'), ''),
+    (re.compile(r'\[([^\]]+)\]\([^)]+\)'), r'\1'),
+    (re.compile(r'(\*\*|__)([^*_\n]+)(\*\*|__)'), r'\2'),
+    (re.compile(r'(\*|_)([^*_\n]+)(\*|_)'), r'\2'),
+    (re.compile(r'^#{1,6}\s+', re.MULTILINE), ''),
+    (re.compile(r'^\s*[-*+]\s+', re.MULTILINE), ''),
+    (re.compile(r'^\s*\d+\.\s+', re.MULTILINE), ''),
+    (re.compile(r'^\s*>\s+', re.MULTILINE), ''),
+]
+
+
+def make_excerpt(body, max_chars=30):
+    """Build a plain-text excerpt by stripping common Markdown syntax."""
+    text = body
+    for pattern, replacement in _MARKDOWN_STRIP_PATTERNS:
+        text = pattern.sub(replacement, text)
+    text = ' '.join(text.split())
+    if not text:
+        return ''
+    if len(text) <= max_chars:
+        return text
+    return text[:max_chars] + '…'
 
 
 _TEMPLATE_RE = re.compile(r'\{\{\s*(\w+)\s*\}\}')
@@ -122,6 +160,10 @@ def process_section(section_dir):
         title = meta.get('title', 'Untitled')
         pub_date = meta.get('pubDate', '')
         date_str = format_date(pub_date)
+        excerpt = make_excerpt(body)
+        tags = meta.get('tags', [])
+        if not isinstance(tags, list):
+            tags = []
 
         body_html = md_lib.markdown(
             body, extensions=['extra', 'sane_lists', 'fenced_code']
@@ -143,6 +185,8 @@ def process_section(section_dir):
         articles.append({
             'uid': uid,
             'title': title,
+            'excerpt': excerpt,
+            'tags': tags,
             'pubDate': pub_date,
             'date': date_str,
             'url': f'/{section_name}/{uid}.html',

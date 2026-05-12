@@ -39,6 +39,7 @@
 
     <!-- scripts -->
     <script src="/static/script/theme.js"></script>
+    <script src="/static/script/listController.js" defer></script>
 
     <!-- adsense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7365336492579910"
@@ -60,93 +61,7 @@
         </section>
 
         <section class="about-section">
-            <h2>2026年</h2>
-
-            <div class="news-entry">
-                <div class="news-date">2026-04-24</div>
-                <div class="news-body">
-                    <span class="news-tag tag-feature">新機能</span>
-                    <h3>サイトの情報ページ群を追加</h3>
-                    <p>
-                        使い方ガイド・お問い合わせ・プライバシーポリシー・ニュース・ブログページを新設しました。
-                        各ページへはフッターのリンクからアクセスできます。
-                    </p>
-                </div>
-            </div>
-
-            <div class="news-entry">
-                <div class="news-date">2026-04-22</div>
-                <div class="news-body">
-                    <span class="news-tag tag-infra">インフラ</span>
-                    <h3>スマートバージョニングシステムの導入</h3>
-                    <p>
-                        CSSおよびJavaScriptのバージョンハッシュを自動管理するシステムを導入しました。
-                        更新時のキャッシュ問題が自動的に解消されます。
-                    </p>
-                </div>
-            </div>
-
-            <div class="news-entry">
-                <div class="news-date">2026-04-18</div>
-                <div class="news-body">
-                    <span class="news-tag tag-perf">パフォーマンス</span>
-                    <h3>鳥の環境音ファイルを軽量化</h3>
-                    <p>
-                        Birds（小鳥）の音源ファイルサイズを削減しました。
-                        初回読み込み時間が短縮され、低速回線でも快適に利用できるようになりました。
-                    </p>
-                </div>
-            </div>
-
-            <div class="news-entry">
-                <div class="news-date">2026-04-15</div>
-                <div class="news-body">
-                    <span class="news-tag tag-fix">バグ修正</span>
-                    <h3>音源ファイルのパス参照エラーを修正</h3>
-                    <p>
-                        一部の環境で音源ファイルが読み込まれない問題を修正しました。
-                        ファイルパスの参照方法を見直し、すべてのブラウザで正常に動作するようになりました。
-                    </p>
-                </div>
-            </div>
-
-            <div class="news-entry">
-                <div class="news-date">2026-04-10</div>
-                <div class="news-body">
-                    <span class="news-tag tag-feature">新機能</span>
-                    <span class="news-tag tag-perf">パフォーマンス</span>
-                    <h3>プロジェクト名を「Focus Mixer」に改名・全面リニューアル</h3>
-                    <p>
-                        サービス名を正式に「Focus Mixer」に変更しました。
-                        あわせてUIを刷新し、SFテイストのダークモードデザインを採用。
-                        ライトモードとのトグル切り替え機能も追加されました。
-                    </p>
-                </div>
-            </div>
-
-            <div class="news-entry">
-                <div class="news-date">2026-03-01</div>
-                <div class="news-body">
-                    <span class="news-tag tag-feature">新機能</span>
-                    <h3>プリセット機能を追加</h3>
-                    <p>
-                        お気に入りの音の組み合わせをブラウザに保存できるプリセット機能を追加しました。
-                        最大3つまでのプリセットを保存し、ワンクリックで呼び出せます。
-                    </p>
-                </div>
-            </div>
-
-            <div class="news-entry">
-                <div class="news-date">2026-01-15</div>
-                <div class="news-body">
-                    <span class="news-tag tag-feature">新機能</span>
-                    <h3>正式リリース（v1.0.0）</h3>
-                    <p>
-                        Focus Mixerを正式にリリースしました。12種類の環境音とポモドーロタイマーを搭載。
-                        Web Audio APIを使用した高品質なサウンド再生を、追加インストールなしで体験できます。
-                    </p>
-                </div>
-            </div>
+            <div id="list-container" data-list-type="news"></div>
         </section>
     </main>
 
