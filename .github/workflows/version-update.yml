@@ -62,6 +62,17 @@ jobs:
             echo "Updated main.js version and internal constant."
           fi
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Markdown
+        run: pip install --no-cache-dir markdown
+
+      - name: Generate articles
+        run: python generate_articles.py
+
       - name: Commit and Push
         run: |
           VERSION=$(git rev-parse --short HEAD)
@@ -69,4 +80,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           # 差分がある場合のみコミット
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: smart versioning [$VERSION]" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: smart versioning & article SSG [$VERSION]" && git push)
