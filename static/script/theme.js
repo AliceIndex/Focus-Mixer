@@ -31,9 +31,39 @@ function initTheme() {
     }
 }
 
-// 実行
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTheme);
-} else {
+function initLanguage() {
+    const langBtn = document.querySelector('.lang-btn');
+    if (!langBtn) return;
+
+    const savedLang = localStorage.getItem('focusMixerLanguage');
+    const currentPath = window.location.pathname;
+
+    if (savedLang === 'ja' && !currentPath.startsWith('/jp')) {
+        const targetPath = currentPath === '/' ? '/jp/' : '/jp' + currentPath;
+        window.location.replace(targetPath + window.location.search + window.location.hash);
+        return;
+    }
+
+    if (savedLang === 'en' && currentPath.startsWith('/jp')) {
+        const targetPath = currentPath === '/jp/' ? '/' : currentPath.replace(/^\/jp/, '') || '/';
+        window.location.replace(targetPath + window.location.search + window.location.hash);
+        return;
+    }
+
+    langBtn.addEventListener('click', () => {
+        const href = langBtn.getAttribute('href') || '';
+        const selectedLang = href.startsWith('/jp') ? 'ja' : 'en';
+        localStorage.setItem('focusMixerLanguage', selectedLang);
+    });
+}
+
+function runInitializers() {
     initTheme();
+    initLanguage();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runInitializers);
+} else {
+    runInitializers();
 }
