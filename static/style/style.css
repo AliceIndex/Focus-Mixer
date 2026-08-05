@@ -365,6 +365,97 @@ input[type="range"] {
   min-height: 90px;
 }
 
+.about-section {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(100, 255, 218, 0.12);
+  padding: 30px;
+  border-radius: 16px;
+  text-align: left;
+  max-width: 900px;
+  margin: 0 auto 30px;
+}
+
+.about-section h2 {
+  color: var(--primary-color);
+  margin-bottom: 18px;
+  font-size: 1.5rem;
+}
+
+.step-card {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.step-number {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: #121212;
+  font-weight: bold;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-content h3 {
+  color: var(--primary-color);
+  margin-bottom: 8px;
+}
+
+.tip-box {
+  background: rgba(100, 255, 218, 0.08);
+  border-left: 3px solid var(--primary-color);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.sound-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.sound-tag {
+  background: var(--surface-color);
+  border: 1px solid rgba(100, 255, 218, 0.18);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.highlight {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.about-section h3 + p {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 850px) {
+  .about-section {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .step-card {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
 /* フッターのスタイル */
 .app-footer {
   margin-top: 40px;
