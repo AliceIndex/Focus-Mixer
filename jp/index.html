@@ -70,8 +70,8 @@
   <div id="toast-container" class="toast-container"></div>
 
   <div class="layout-wrapper">
-    <aside class="ad-space left-ad">
-      <div class="ad-placeholder">Ad Space<br>(160x600)</div>
+    <aside class="ad-space left-ad" aria-hidden="true">
+      <div class="ad-placeholder"></div>
     </aside>
 
     <main class="main-content">
@@ -79,9 +79,9 @@
         <h2 id="timer-mode">Focus Time</h2>
         <div class="time-display" id="time-display">25:00</div>
         <div class="timer-controls">
-          <button id="btn-start">Start</button>
-          <button id="btn-pause">Pause</button>
-          <button id="btn-reset">Reset</button>
+          <button id="btn-start">開始</button>
+          <button id="btn-pause">一時停止</button>
+          <button id="btn-reset">リセット</button>
           <button id="settings-toggle" class="icon-btn">⚙️</button>
         </div>
       </section>
@@ -122,7 +122,7 @@
       </section>
 
       <section class="about-section" id="howto">
-        <h2>使い方ガイド</h2>
+        <h2>使い方</h2>
         <p>
           <span class="highlight">Focus Mixer</span> は、ポモドーロタイマーと12種類の環境音を組み合わせた集中支援ツールです。
           このセクションでは基本操作から応用テクニックまでを分かりやすく紹介します。
@@ -244,18 +244,18 @@
       </section>
     </main>
 
-    <aside class="ad-space right-ad">
-      <div class="ad-placeholder">Ad Space<br>(160x600)</div>
+    <aside class="ad-space right-ad" aria-hidden="true">
+      <div class="ad-placeholder"></div>
     </aside>
   </div>
 
-  <div class="bottom-ad">
-    <div class="ad-placeholder">Ad Space (728x90 or 320x100)</div>
+  <div class="bottom-ad" aria-hidden="true">
+    <div class="ad-placeholder"></div>
   </div>
 
   <div id="settings-modal" class="modal-overlay hidden">
     <div class="modal-content">
-      <h3>Timer Settings</h3>
+      <h3>タイマー設定</h3>
       <div class="settings-grid">
         <div class="setting-group">
           <label>集中時間:</label>
@@ -283,7 +283,7 @@
 
   <div id="timer-modal" class="modal-overlay hidden">
     <div class="modal-content">
-      <h3 id="modal-title">Time's Up!</h3>
+      <h3 id="modal-title">時間です！</h3>
       <p id="modal-message">お疲れ様です！休憩しましょう。</p>
       <button id="modal-close-btn" class="preset-btn">閉じる</button>
     </div>
@@ -292,9 +292,9 @@
   <footer>
     <nav class="footer-nav">
       <a href="https://focusmixer.com/jp/" class="link-btn">Home</a>
-      <a href="/jp/about.html" class="link-btn">About</a>
+      <a href="/jp/about" class="link-btn">About</a>
       <a href="#howto" class="link-btn">使い方</a>
-      <a href="/jp/policy.html" class="link-btn">Privacy Policy</a>
+      <a href="/jp/privacy-policy" class="link-btn">Privacy Policy</a>
       <a href="/news/index.html" class="link-btn">News</a>
       <a href="/blog/index.html" class="link-btn">Blog</a>
     </nav>
