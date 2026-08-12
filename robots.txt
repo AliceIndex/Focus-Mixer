@@ -2,3 +2,11 @@ User-agent: *
 Allow: /
 
 Sitemap: https://focusmixer.com/sitemap.xml
+
+# Public pages for SEO and indexing
+Allow: /
+Allow: /jp/
+Allow: /about
+Allow: /jp/about
+Allow: /privacy-policy
+Allow: /jp/privacy-policy
