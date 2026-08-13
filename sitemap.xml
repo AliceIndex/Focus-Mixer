@@ -13,25 +13,25 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://focusmixer.com/about</loc>
+    <loc>https://focusmixer.com/about.html</loc>
     <lastmod>2026-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://focusmixer.com/jp/about</loc>
+    <loc>https://focusmixer.com/jp/about.html</loc>
     <lastmod>2026-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://focusmixer.com/privacy-policy</loc>
+    <loc>https://focusmixer.com/privacy-policy.html</loc>
     <lastmod>2026-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://focusmixer.com/jp/privacy-policy</loc>
+    <loc>https://focusmixer.com/jp/privacy-policy.html</loc>
     <lastmod>2026-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
