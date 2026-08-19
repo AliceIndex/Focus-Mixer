@@ -1,62 +1,60 @@
-import os
-import pathlib
 import datetime
-home=pathlib.Path.cwd()
-print(home)
+import pathlib
 
-htmls=[]
 
-dir_list=os.listdir(home)
+DOMAIN = "https://focusmixer.com"
+SITEMAP_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9"
 
-print(dir_list)
-if "sitemap.xml" in dir_list:
-    print("sitemap.xml already exists")
-    sitemap=str(home)+"/sitemap.xml"
+STATIC_PAGES = [
+    ("index.html", "/", "1.0", "weekly"),
+    ("jp/index.html", "/jp/", "1.0", "weekly"),
+    ("about/index.html", "/about/", "0.8", "monthly"),
+    ("privacy-policy/index.html", "/privacy-policy/", "0.5", "yearly"),
+    ("jp/privacy-policy/index.html", "/jp/privacy-policy/", "0.5", "yearly"),
+]
 
-def find_html_files():
-    
-    print(f"探索開始: {home}")
-    # rglobを使って.htmlファイルを再帰的に探索
-    # ※ファイル数が多い場合は少し時間がかかることがあります
-    html_files = home.rglob("*.html")
-    
-    # 見つかったファイルの絶対パスを一つずつ出力
-    count = 0
-    for file_path in html_files:
-        print(file_path)
-        htmls.append(str(file_path).replace(str(home),"").replace("\\","/"))
-        count += 1
-        
-    print(f"合計 {count} 個のHTMLファイルが見つかりました。")
-    
-def priority(input_files:str):
-    priority_files=[["index"],
-                    ["contact","about","howto"],
-                    ["blog","news"],
-                    ["contact"],
-                    ["other"]]
-    
-    for i in range(len(priority_files)):
-        for files in priority_files[i]:
-            if files in input_files:
-                return str(1.0 - i*0.2)
-    
-    return "0.2"
+
+def find_pages(home):
+    pages = []
+    for file_name, url, priority, changefreq in STATIC_PAGES:
+        if (home / file_name).is_file():
+            pages.append((url, priority, changefreq))
+
+    blog_dir = home / "blog"
+    if blog_dir.is_dir():
+        for file_path in sorted(blog_dir.glob("*.html")):
+            if file_path.name in {"index.html", "article_template.html"}:
+                continue
+            pages.append((f"/blog/{file_path.name}", "0.7", "weekly"))
+
+    return pages
+
+
+def generate_sitemap(home):
+    today = datetime.date.today().isoformat()
+    pages = find_pages(home)
+    entries = []
+    for url, priority, changefreq in pages:
+        entries.append(
+            "  <url>\n"
+            f"    <loc>{DOMAIN}{url}</loc>\n"
+            f"    <lastmod>{today}</lastmod>\n"
+            f"    <changefreq>{changefreq}</changefreq>\n"
+            f"    <priority>{priority}</priority>\n"
+            "  </url>"
+        )
+
+    sitemap_content = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        f'<urlset xmlns="{SITEMAP_NAMESPACE}">\n'
+        + "\n".join(entries)
+        + "\n</urlset>\n"
+    )
+    sitemap_path = home / "sitemap.xml"
+    sitemap_path.write_text(sitemap_content, encoding="utf-8")
+    return sitemap_path, len(pages)
+
 
 if __name__ == "__main__":
-    find_html_files()
-    print(htmls)
-    
-    with open(sitemap, mode='w') as f:
-        f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
-        f.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
-        for pages in htmls:
-            f.write('  <url>\n')
-            f.write(f'    <loc>https://focusmixer.com{pages}</loc>\n')
-            f.write(f'    <lastmod>{datetime.date.today()}</lastmod>\n')
-            f.write('    <changefreq>weekly</changefreq>\n')
-            f.write(f'    <priority>{priority(pages)}</priority>\n')
-            f.write('  </url>\n')
-        f.write('</urlset>\n')
-
-    print(f"sitemap.xml has been created at: {sitemap}")
+    sitemap_path, page_count = generate_sitemap(pathlib.Path(__file__).resolve().parent)
+    print(f"Generated {page_count} URLs in {sitemap_path}")
