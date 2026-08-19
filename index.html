@@ -63,7 +63,7 @@
 <body>
   <audio id="silent-track" loop playsinline webkit-playsinline src="/assets/sounds/silent.ogg" style="display: none;"></audio>
   <header>
-    <a href="/jp/" class="lang-btn">日本語</a>
+    <a href="/jp/" class="lang-btn">Japanese</a>
     <h1>Focus Mixer</h1>
     <button id="theme-toggle" class="theme-btn">☀️ Light</button>
   </header>
@@ -80,9 +80,9 @@
         <h2 id="timer-mode">Focus Time</h2>
         <div class="time-display" id="time-display">25:00</div>
         <div class="timer-controls">
-          <button id="btn-start">開始</button>
-          <button id="btn-pause">一時停止</button>
-          <button id="btn-reset">リセット</button>
+          <button id="btn-start">Start</button>
+          <button id="btn-pause">Pause</button>
+          <button id="btn-reset">Reset</button>
           <button id="settings-toggle" class="icon-btn">⚙️</button>
         </div>
       </section>
@@ -117,49 +117,49 @@
       </div>
 
       <section class="preset-section">
-        <button id="btn-save" class="preset-btn">保存</button>
-        <button id="btn-load" class="preset-btn">読込</button>
-        <button id="btn-mute-all" class="preset-btn danger-btn">全ミュート</button>
+        <button id="btn-save" class="preset-btn">Save</button>
+        <button id="btn-load" class="preset-btn">Load</button>
+        <button id="btn-mute-all" class="preset-btn danger-btn">Mute All</button>
       </section>
 
       <section class="about-section" id="howto">
-        <h2>使い方</h2>
+        <h2>How to Use Focus Mixer &amp; Create Your Ideal Workspace</h2>
         <p>
-          <span class="highlight">Focus Mixer</span> は、ポモドーロタイマーと12種類の環境音を組み合わせて集中力を高めるツールです。基本操作から応用テクニックまで、段階的にご案内します。
+          <span class="highlight">Focus Mixer</span> combines a Pomodoro timer with 12 ambient sounds to help you focus. This guide walks you through the basics and useful techniques.
         </p>
       </section>
 
       <section class="about-section">
-        <h2>基本の使い方</h2>
+        <h2>Getting Started</h2>
 
         <div class="step-card">
           <div class="step-number">1</div>
           <div class="step-content">
-            <h3>環境音を選ぶ</h3>
+            <h3>Blend Ambient Sounds</h3>
             <p>
-              画面中央のサウンドパネルで任意の音をクリックすると再生が開始されます。<span class="highlight">ハイライト</span>されたボタンは現在有効な音です。複数の音を同時に鳴らして、独自の音環境を作れます。
+              Click any sound in the central sound panel to start playback. A <span class="highlight">highlighted</span> button indicates an active sound. Play multiple sounds at once to create your own ambient mix.
             </p>
-            <div class="tip-box">💡 まずは Rain（雨音）や White Noise（白色ノイズ）から試すのがおすすめです。</div>
+            <div class="tip-box">💡 Start with Rain or White Noise.</div>
           </div>
         </div>
 
         <div class="step-card">
           <div class="step-number">2</div>
           <div class="step-content">
-            <h3>音量を調整する</h3>
+            <h3>Adjust the Volume</h3>
             <p>
-              各サウンドボタンの下にあるスライダーで音量を個別に調整できます。複数の音を重ねるときは、バランスを整えると自然で落ち着いた音環境が作れます。
+              Adjust each sound independently with the slider below its sound button. When layering sounds, balance the levels for a natural, calming atmosphere.
             </p>
-            <div class="tip-box">💡 主役の音を70%、補助の音を30%程度にするとバランスが良くなります。</div>
+            <div class="tip-box">💡 A 70% primary sound and 30% supporting sound is a good starting balance.</div>
           </div>
         </div>
 
         <div class="step-card">
           <div class="step-number">3</div>
           <div class="step-content">
-            <h3>タイマーを開始する</h3>
+            <h3>Start the Timer</h3>
             <p>
-              タイマーパネルの「開始」ボタンを押すと、25分のカウントダウンが始まります。設定アイコン（⚙️）から集中時間を自由に調整できます。タイマーが0になると通知音が鳴り、休憩へ切り替わります。
+              Press <strong>Start</strong> on the timer panel to begin a 25-minute countdown. Use the settings icon (⚙️) to adjust the focus duration. When the timer reaches zero, a notification sound plays and the timer switches to break mode.
             </p>
           </div>
         </div>
@@ -167,28 +167,28 @@
         <div class="step-card">
           <div class="step-number">4</div>
           <div class="step-content">
-            <h3>休憩モードに切り替える</h3>
+            <h3>Take a Break</h3>
             <p>
-              タイマー終了後は休憩タイマーへ切り替えられます。休憩中でも環境音はそのまま流れ続けます。気分転換したい場合は、別のサウンドセットを選ぶのもおすすめです。
+              After a focus session, the timer switches to break mode. Ambient sounds continue during your break, or you can choose a different sound set for a change of pace.
             </p>
-            <div class="tip-box">💡 Birds（小鳥）や Bell（鐘）など、穏やかな音が休憩時に心地よく働きます。</div>
+            <div class="tip-box">💡 Gentle sounds such as Birds or Bell work well during breaks.</div>
           </div>
         </div>
 
         <div class="step-card">
           <div class="step-number">5</div>
           <div class="step-content">
-            <h3>プリセットを保存する</h3>
+            <h3>Save a Preset</h3>
             <p>
-              お気に入りの音の組み合わせはプリセットとして保存できます。「保存」ボタンを押すと、現在の設定がブラウザに記録されます。次回は1クリックで呼び出せます。
+              Save your favorite sound combinations as presets. Press <strong>Save</strong> to store the current settings in your browser, then recall them with one click next time.
             </p>
           </div>
         </div>
       </section>
 
       <section class="about-section">
-        <h2>サウンドライブラリ</h2>
-        <p>Focus Mixer には 12 種類の環境音が含まれています。</p>
+        <h2>Sound Library</h2>
+        <p>Focus Mixer includes 12 ambient sounds.</p>
         <div class="sound-grid">
           <div class="sound-tag">🌧️ Rain</div>
           <div class="sound-tag">🌊 Waves</div>
@@ -206,34 +206,34 @@
       </section>
 
       <section class="about-section">
-        <h2>おすすめの組み合わせ</h2>
-        <h3>全集中モード</h3>
+        <h2>Recommended Combinations</h2>
+        <h3>Deep Focus</h3>
         <p>
-          Rain × White Noise — 外部の雑音を遮断し、深い集中状態を作り出します。コーディングやライティングのように頭を使う作業に向いています。
+          Rain × White Noise — Masks outside noise and supports deep focus for demanding work such as coding and writing.
         </p>
-        <h3>カフェ雰囲気</h3>
+        <h3>Cafe Atmosphere</h3>
         <p>
-          Cafe × Birds — 適度なざわつきと自然音が、創造的な作業を後押しします。デザインや執筆でアイデアを生み出したいときに役立ちます。
+          Cafe × Birds — A gentle blend of background chatter and nature sounds that encourages creative work such as design and writing.
         </p>
-        <h3>エンジニアモード</h3>
+        <h3>Engineer Mode</h3>
         <p>
-          Server × Fan × Keyboard — 機械的な低音が思考の連続性を保ち、長時間のコーディングセッションに効果的です。
+          Server × Fan × Keyboard — Mechanical low tones that help maintain mental continuity during long coding sessions.
         </p>
       </section>
 
       <section class="about-section">
-        <h2>よくある質問</h2>
-        <h3>音が途中で止まってしまう</h3>
+        <h2>Frequently Asked Questions</h2>
+        <h3>Sound stops during playback</h3>
         <p>
-          タブがバックグラウンドに長時間入ると、ブラウザの省電力設定で音が一時停止することがあります。タブを前面に戻して、再度再生してください。
+          Browser power-saving settings may pause audio after a tab stays in the background for a while. Bring the tab back to the foreground and start playback again.
         </p>
-        <h3>スマートフォンでも使えますか？</h3>
+        <h3>Can I use Focus Mixer on a smartphone?</h3>
         <p>
-          はい、利用できます。ただし、モバイル端末では画面が消灯すると音が止まる場合があります。画面のタイムアウトを「なし」にするか、たまに画面をタップして起動状態を保ってください。
+          Yes. On mobile devices, audio may stop when the screen turns off. Set the screen timeout to never, or tap the screen occasionally to keep it awake.
         </p>
-        <h3>オフラインでも使えますか？</h3>
+        <h3>Can I use it offline?</h3>
         <p>
-          Focus Mixer はブラウザベースのWebアプリです。初回アクセス後に音源がキャッシュされるため、ページを一度開いておけばオフラインでも基本機能を使えます。
+          Focus Mixer is a browser-based web app. Once the sound files have been cached after your first visit, the core features can work offline.
         </p>
       </section>
     </main>
@@ -249,37 +249,37 @@
 
   <div id="settings-modal" class="modal-overlay hidden">
     <div class="modal-content">
-      <h3>タイマー設定</h3>
+      <h3>Timer Settings</h3>
       <div class="settings-grid">
         <div class="setting-group">
-          <label>集中時間:</label>
+          <label>Focus Time:</label>
           <div class="input-pair">
-            <input type="number" class="timer-input" id="focus-min-input" min="0" max="99" value="25"> <span>分</span>
+            <input type="number" class="timer-input" id="focus-min-input" min="0" max="99" value="25"> <span>min</span>
             <input type="number" class="timer-input" id="focus-sec-input" min="0" max="45" step="15" value="0">
-            <span>秒</span>
+            <span>sec</span>
           </div>
         </div>
         <div class="setting-group">
-          <label>休憩時間:</label>
+          <label>Break Time:</label>
           <div class="input-pair">
-            <input type="number" class="timer-input" id="break-min-input" min="0" max="99" value="5"> <span>分</span>
+            <input type="number" class="timer-input" id="break-min-input" min="0" max="99" value="5"> <span>min</span>
             <input type="number" class="timer-input" id="break-sec-input" min="0" max="45" step="15" value="0">
-            <span>秒</span>
+            <span>sec</span>
           </div>
         </div>
       </div>
       <div class="modal-actions">
-        <button id="btn-apply-settings" class="preset-btn">適用して閉じる</button>
-        <button id="btn-cancel-settings" class="preset-btn secondary">キャンセル</button>
+        <button id="btn-apply-settings" class="preset-btn">Apply &amp; Close</button>
+        <button id="btn-cancel-settings" class="preset-btn secondary">Cancel</button>
       </div>
     </div>
   </div>
 
   <div id="timer-modal" class="modal-overlay hidden">
     <div class="modal-content">
-      <h3 id="modal-title">時間です！</h3>
-      <p id="modal-message">お疲れ様です！休憩しましょう。</p>
-      <button id="modal-close-btn" class="preset-btn">閉じる</button>
+      <h3 id="modal-title">Time is up!</h3>
+      <p id="modal-message">Good work! Time for a break.</p>
+      <button id="modal-close-btn" class="preset-btn">Close</button>
     </div>
   </div>
 
@@ -287,7 +287,7 @@
     <nav class="footer-nav">
       <a href="https://focusmixer.com" class="link-btn">Home</a>
       <a href="/about" class="link-btn">About</a>
-      <a href="#howto" class="link-btn">使い方</a>
+      <a href="#howto" class="link-btn">How to use</a>
       <a href="/privacy-policy" class="link-btn">Privacy Policy</a>
       <a href="/news/index.html" class="link-btn">News</a>
       <a href="/blog/index.html" class="link-btn">Blog</a>
@@ -302,8 +302,8 @@
         For details, please see our <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" class="inline-link">Privacy Policy</a>.
       </p>
       <div class="cookie-actions">
-        <button id="btn-accept-cookie" class="primary-btn">同意する</button>
-        <button id="btn-decline-cookie" class="secondary-btn">同意しない</button>
+        <button id="btn-accept-cookie" class="primary-btn">Accept</button>
+        <button id="btn-decline-cookie" class="secondary-btn">Decline</button>
       </div>
     </div>
   </div>
