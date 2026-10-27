@@ -1,39 +1,99 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://focusmixer.com/</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://focusmixer.com/jp/</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+<?xml version='1.0' encoding='utf-8'?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://focusmixer.com/about/</loc>
-    <lastmod>2026-08-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://focusmixer.com/about/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://focusmixer.com/jp/about/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://focusmixer.com/about/" />
+    <lastmod>2026-10-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://focusmixer.com/privacy-policy/</loc>
-    <lastmod>2026-08-19</lastmod>
-    <changefreq>yearly</changefreq>
+    <loc>https://focusmixer.com/blog/POb1yj33.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://focusmixer.com/blog/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://focusmixer.com/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://focusmixer.com/contact.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://focusmixer.com/jp/contact.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://focusmixer.com/contact.html" />
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://focusmixer.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://focusmixer.com/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://focusmixer.com/jp/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://focusmixer.com/" />
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://focusmixer.com/jp/about/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://focusmixer.com/about/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://focusmixer.com/jp/about/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://focusmixer.com/about/" />
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://focusmixer.com/jp/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://focusmixer.com/contact.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://focusmixer.com/jp/contact.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://focusmixer.com/contact.html" />
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://focusmixer.com/jp/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://focusmixer.com/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://focusmixer.com/jp/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://focusmixer.com/" />
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
   </url>
   <url>
     <loc>https://focusmixer.com/jp/privacy-policy/</loc>
-    <lastmod>2026-08-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://focusmixer.com/privacy-policy/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://focusmixer.com/jp/privacy-policy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://focusmixer.com/privacy-policy/" />
+    <lastmod>2026-10-27</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://focusmixer.com/blog/POb1yj33.html</loc>
-    <lastmod>2026-08-19</lastmod>
+    <loc>https://focusmixer.com/news/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://focusmixer.com/news/snZlzIla.html</loc>
+    <lastmod>2026-10-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://focusmixer.com/privacy-policy/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://focusmixer.com/privacy-policy/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://focusmixer.com/jp/privacy-policy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://focusmixer.com/privacy-policy/" />
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>

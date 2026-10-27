@@ -1,31 +1,72 @@
 import datetime
 import pathlib
+import xml.etree.ElementTree as ET
+from html.parser import HTMLParser
+from urllib.parse import urlsplit
 
 
 DOMAIN = "https://focusmixer.com"
 SITEMAP_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9"
+XHTML_NAMESPACE = "http://www.w3.org/1999/xhtml"
 
-STATIC_PAGES = [
-    ("index.html", "/", "1.0", "weekly"),
-    ("jp/index.html", "/jp/", "1.0", "weekly"),
-    ("about/index.html", "/about/", "0.8", "monthly"),
-    ("privacy-policy/index.html", "/privacy-policy/", "0.5", "yearly"),
-    ("jp/privacy-policy/index.html", "/jp/privacy-policy/", "0.5", "yearly"),
-]
+ET.register_namespace("", SITEMAP_NAMESPACE)
+ET.register_namespace("xhtml", XHTML_NAMESPACE)
+
+
+class PageMetadataParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.canonical = None
+        self.alternates = {}
+
+    def handle_starttag(self, tag, attrs):
+        if tag.lower() != "link":
+            return
+        attributes = dict(attrs)
+        relations = (attributes.get("rel") or "").lower().split()
+        href = attributes.get("href")
+        if not href:
+            return
+        if "canonical" in relations:
+            self.canonical = href
+        elif "alternate" in relations and attributes.get("hreflang"):
+            self.alternates[attributes["hreflang"]] = href
 
 
 def find_pages(home):
     pages = []
-    for file_name, url, priority, changefreq in STATIC_PAGES:
-        if (home / file_name).is_file():
-            pages.append((url, priority, changefreq))
+    site_origin = urlsplit(DOMAIN)
+    for file_path in sorted(home.rglob("*.html")):
+        if file_path.name == "article_template.html":
+            continue
+        parser = PageMetadataParser()
+        parser.feed(file_path.read_text(encoding="utf-8"))
+        if not parser.canonical:
+            continue
 
-    blog_dir = home / "blog"
-    if blog_dir.is_dir():
-        for file_path in sorted(blog_dir.glob("*.html")):
-            if file_path.name in {"index.html", "article_template.html"}:
-                continue
-            pages.append((f"/blog/{file_path.name}", "0.7", "weekly"))
+        canonical = urlsplit(parser.canonical)
+        if (
+            canonical.scheme != site_origin.scheme
+            or canonical.netloc != site_origin.netloc
+            or canonical.query
+            or canonical.fragment
+        ):
+            continue
+
+        path = canonical.path
+        if path in {"/", "/jp/"}:
+            priority, changefreq = "1.0", "weekly"
+        elif path.rstrip("/") in {"/about", "/jp/about"}:
+            priority, changefreq = "0.8", "monthly"
+        elif path.rstrip("/") in {"/privacy-policy", "/jp/privacy-policy"}:
+            priority, changefreq = "0.5", "yearly"
+        elif path in {"/blog/", "/news/"}:
+            priority, changefreq = "0.6", "weekly"
+        elif path.startswith(("/blog/", "/news/")):
+            priority, changefreq = "0.7", "weekly"
+        else:
+            priority, changefreq = "0.5", "monthly"
+        pages.append((parser.canonical, priority, changefreq, parser.alternates))
 
     return pages
 
@@ -33,23 +74,22 @@ def find_pages(home):
 def generate_sitemap(home):
     today = datetime.date.today().isoformat()
     pages = find_pages(home)
-    entries = []
-    for url, priority, changefreq in pages:
-        entries.append(
-            "  <url>\n"
-            f"    <loc>{DOMAIN}{url}</loc>\n"
-            f"    <lastmod>{today}</lastmod>\n"
-            f"    <changefreq>{changefreq}</changefreq>\n"
-            f"    <priority>{priority}</priority>\n"
-            "  </url>"
-        )
+    urlset = ET.Element(f"{{{SITEMAP_NAMESPACE}}}urlset")
+    for canonical, priority, changefreq, alternates in pages:
+        url_element = ET.SubElement(urlset, f"{{{SITEMAP_NAMESPACE}}}url")
+        ET.SubElement(url_element, f"{{{SITEMAP_NAMESPACE}}}loc").text = canonical
+        for language, href in sorted(alternates.items()):
+            ET.SubElement(
+                url_element,
+                f"{{{XHTML_NAMESPACE}}}link",
+                {"rel": "alternate", "hreflang": language, "href": href},
+            )
+        ET.SubElement(url_element, f"{{{SITEMAP_NAMESPACE}}}lastmod").text = today
+        ET.SubElement(url_element, f"{{{SITEMAP_NAMESPACE}}}changefreq").text = changefreq
+        ET.SubElement(url_element, f"{{{SITEMAP_NAMESPACE}}}priority").text = priority
 
-    sitemap_content = (
-        '<?xml version="1.0" encoding="UTF-8"?>\n'
-        f'<urlset xmlns="{SITEMAP_NAMESPACE}">\n'
-        + "\n".join(entries)
-        + "\n</urlset>\n"
-    )
+    ET.indent(urlset, space="  ")
+    sitemap_content = ET.tostring(urlset, encoding="unicode", xml_declaration=True) + "\n"
     sitemap_path = home / "sitemap.xml"
     sitemap_path.write_text(sitemap_content, encoding="utf-8")
     return sitemap_path, len(pages)
