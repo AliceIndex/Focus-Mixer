@@ -443,6 +443,24 @@ input[type="range"] {
   margin-bottom: 16px;
 }
 
+.about-section details {
+  margin: 14px 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(100, 255, 218, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.about-section summary {
+  color: var(--primary-color);
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.about-section details p {
+  margin-top: 12px;
+}
+
 @media (max-width: 850px) {
   .about-section {
     padding: 24px;

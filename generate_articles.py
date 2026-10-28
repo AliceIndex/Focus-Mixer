@@ -161,6 +161,7 @@ def process_section(section_dir):
         pub_date = meta.get('pubDate', '')
         date_str = format_date(pub_date)
         excerpt = make_excerpt(body)
+        description = meta.get('description', excerpt)
         tags = meta.get('tags', [])
         if not isinstance(tags, list):
             tags = []
@@ -171,6 +172,7 @@ def process_section(section_dir):
 
         html = render_template(template, {
             'title': escape_html(title),
+            'description': escape_html(description),
             'date': escape_html(date_str),
             'pubDate': escape_html(pub_date),
             'uid': escape_html(uid),
@@ -185,7 +187,7 @@ def process_section(section_dir):
         articles.append({
             'uid': uid,
             'title': title,
-            'excerpt': excerpt,
+            'excerpt': description,
             'tags': tags,
             'pubDate': pub_date,
             'date': date_str,

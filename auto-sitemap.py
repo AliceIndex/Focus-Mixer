@@ -56,8 +56,6 @@ def find_pages(home):
         path = canonical.path
         if path in {"/", "/jp/"}:
             priority, changefreq = "1.0", "weekly"
-        elif path.rstrip("/") in {"/about", "/jp/about"}:
-            priority, changefreq = "0.8", "monthly"
         elif path.rstrip("/") in {"/privacy-policy", "/jp/privacy-policy"}:
             priority, changefreq = "0.5", "yearly"
         elif path in {"/blog/", "/news/"}:

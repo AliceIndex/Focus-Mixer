@@ -223,17 +223,69 @@
 
       <section class="about-section">
         <h2>Frequently Asked Questions</h2>
-        <h3>Sound stops during playback</h3>
+        <details>
+          <summary>Sound stops during playback</summary>
+          <p>
+            Browser power-saving settings may pause audio after a tab stays in the background for a while. Bring the tab back to the foreground and start playback again.
+          </p>
+        </details>
+        <details>
+          <summary>Can I use Focus Mixer on a smartphone?</summary>
+          <p>
+            Yes. On mobile devices, audio may stop when the screen turns off. Set the screen timeout to never, or tap the screen occasionally to keep it awake.
+          </p>
+        </details>
+        <details>
+          <summary>Can I use it offline?</summary>
+          <p>
+            Focus Mixer is a browser-based web app. Once the sound files have been cached after your first visit, the core features can work offline.
+          </p>
+        </details>
+      </section>
+
+      <section class="about-section" id="about">
+        <h2>About Focus Mixer</h2>
         <p>
-          Browser power-saving settings may pause audio after a tab stays in the background for a while. Bring the tab back to the foreground and start playback again.
+          <span class="highlight">Focus Mixer</span> is a minimalist Pomodoro timer and ambient sound mixer built to support deep, sustained focus. Its distraction-free controls help you shape a workspace that suits the task at hand.
         </p>
-        <h3>Can I use Focus Mixer on a smartphone?</h3>
+      </section>
+
+      <section class="about-section" id="pomodoro-technique">
+        <h2>The Science of the Pomodoro Technique</h2>
         <p>
-          Yes. On mobile devices, audio may stop when the screen turns off. Set the screen timeout to never, or tap the screen occasionally to keep it awake.
+          Developed in the 1980s, the Pomodoro Technique alternates focused work intervals with short breaks. A clear time boundary can make it easier to get started, while regular breaks help manage fatigue during longer work sessions.
         </p>
-        <h3>Can I use it offline?</h3>
+        <h3>Why use focused intervals?</h3>
+        <ul>
+          <li><strong>Sustained concentration:</strong> A defined work interval gives your attention a clear goal.</li>
+          <li><strong>Regular recovery:</strong> Short breaks create space to reset between sessions.</li>
+          <li><strong>Visible progress:</strong> Counting completed sessions helps you notice your working rhythm.</li>
+        </ul>
+      </section>
+
+      <section class="about-section" id="sound-masking">
+        <h2>How Ambient Sound Helps</h2>
         <p>
-          Focus Mixer is a browser-based web app. Once the sound files have been cached after your first visit, the core features can work offline.
+          Ambient sound can make sudden noises and nearby conversations less noticeable by providing a steady background. Focus Mixer lets you layer sounds and adjust each volume to find a comfortable balance.
+        </p>
+        <blockquote>
+          <strong>What is sound masking?</strong><br>
+          Sound masking uses background sound to reduce the contrast between a distraction and its surroundings, making that distraction less prominent to the listener.
+        </blockquote>
+      </section>
+
+      <section class="about-section" id="privacy-and-technology">
+        <h2>Privacy &amp; Technology</h2>
+        <p>
+          Timer settings, volume levels, and presets are stored in your browser and are not sent to Focus Mixer servers. Audio is delivered with the Web Audio API, so there is nothing to install.
+          Read the <a href="/privacy-policy/" class="inline-link">Privacy Policy</a> for details about cookies, analytics, and advertising.
+        </p>
+      </section>
+
+      <section class="about-section" id="focus-guides">
+        <h2>Guides to Focus and Ambient Sound</h2>
+        <p>
+          Focus Mixer also publishes practical, Japanese-language guides about using focus intervals, choosing background sounds, and adjusting a workspace. Start with the <a href="/blog/" class="inline-link">Focus Mixer blog</a> to explore the articles.
         </p>
       </section>
     </main>
@@ -286,7 +338,7 @@
   <footer>
     <nav class="footer-nav">
       <a href="https://focusmixer.com" class="link-btn">Home</a>
-      <a href="/about/" class="link-btn">About</a>
+      <a href="#about" class="link-btn">About</a>
       <a href="#howto" class="link-btn">How to use</a>
       <a href="/privacy-policy/" class="link-btn">Privacy Policy</a>
       <a href="/news/index.html" class="link-btn">News</a>

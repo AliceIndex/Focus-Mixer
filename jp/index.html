@@ -227,20 +227,97 @@
 
       <section class="about-section">
         <h2>よくある質問</h2>
-        <h3>音が突然止まりました</h3>
+        <details>
+          <summary>音が突然止まりました</summary>
+          <p>
+            ブラウザのタブを長時間バックグラウンドにしていると、省電力機能により音が一時停止することがあります。
+            タブをアクティブにして再度再生ボタンを押してください。
+          </p>
+        </details>
+        <details>
+          <summary>スマートフォンでも使えますか？</summary>
+          <p>
+            はい、対応しています。ただし、スマートフォンの場合は画面が消灯するとオーディオが停止する場合があります。
+            画面の自動消灯設定を「なし」にするか、画面を時折タップしてください。
+          </p>
+        </details>
+        <details>
+          <summary>オフラインでも動作しますか？</summary>
+          <p>
+            Focus Mixerはブラウザ上で動作するWebアプリです。初回アクセス時に音源データがキャッシュされるため、一度読み込んだ後はオフラインでも基本的な機能をご利用いただけます。
+          </p>
+        </details>
+      </section>
+
+      <section class="about-section" id="about">
+        <h2>Focus Mixerについて</h2>
         <p>
-          ブラウザのタブを長時間バックグラウンドにしていると、省電力機能により音が一時停止することがあります。
-          タブをアクティブにして再度再生ボタンを押してください。
+          <span class="highlight">Focus Mixer</span>は、深く持続する集中をサポートする、シンプルなポモドーロタイマーと環境音ミキサーです。余計な機能を省いた操作で、作業に合わせた環境を作れます。
         </p>
-        <h3>スマートフォンでも使えますか？</h3>
+      </section>
+
+      <section class="about-section" id="pomodoro-technique">
+        <h2>ポモドーロ・テクニックの考え方</h2>
         <p>
-          はい、対応しています。ただし、スマートフォンの場合は画面が消灯するとオーディオが停止する場合があります。
-          画面の自動消灯設定を「なし」にするか、画面を時折タップしてください。
+          1980年代に考案されたポモドーロ・テクニックは、集中して作業する時間と短い休憩を交互に設ける方法です。時間の区切りが作業の開始を助け、定期的な休憩が長時間の作業による疲れを和らげます。
         </p>
-        <h3>オフラインでも動作しますか？</h3>
+        <h3>集中時間を区切るメリット</h3>
+        <ul>
+          <li><strong>集中の持続:</strong> 作業時間に区切りを設けることで、取り組む目標が明確になります。</li>
+          <li><strong>定期的なリフレッシュ:</strong> 短い休憩を挟み、次の作業に向けて気持ちを切り替えられます。</li>
+          <li><strong>進捗の把握:</strong> 完了したセッションを数えることで、自分の作業リズムを振り返れます。</li>
+        </ul>
+      </section>
+
+      <section class="about-section" id="sound-masking">
+        <h2>環境音が集中を助ける仕組み</h2>
         <p>
-          Focus Mixerはブラウザ上で動作するWebアプリです。初回アクセス時に音源データがキャッシュされるため、一度読み込んだ後はオフラインでも基本的な機能をご利用いただけます。
+          一定の環境音を背景に流すと、突然の物音や周囲の会話が気になりにくくなることがあります。Focus Mixerでは複数の音を重ね、それぞれの音量を調整して自分に合うバランスを探せます。
         </p>
+        <blockquote>
+          <strong>サウンドマスキングとは？</strong><br>
+          背景音によって、周囲の音と気になる音の差を小さくし、気になる音を目立ちにくくする考え方です。
+        </blockquote>
+      </section>
+
+      <section class="about-section" id="privacy-and-technology">
+        <h2>プライバシーと技術</h2>
+        <p>
+          タイマー設定、音量、プリセットはブラウザ内に保存され、Focus Mixerのサーバーには送信されません。音声再生にはWeb Audio APIを利用しているため、インストールは不要です。
+          Cookie、アクセス解析、広告については<a href="/jp/privacy-policy/" class="inline-link">プライバシーポリシー</a>をご確認ください。
+        </p>
+      </section>
+
+      <section class="about-section" id="focus-guides">
+        <h2>集中と環境音の読みもの</h2>
+        <p>
+          ポモドーロの時間設定、環境音の選び方、作業別のミックス方法などを、実践しやすい手順とともに紹介しています。興味のあるテーマからご覧ください。
+        </p>
+        <article>
+          <h3><a href="/blog/pomo2026.html" class="inline-link">なぜ25分で区切る？ポモドーロ・テクニックの実践ガイド</a></h3>
+          <p>25分を初期値として試し、作業や体調に合う集中時間・休憩時間を見つける方法を解説します。</p>
+        </article>
+        <article>
+          <h3><a href="/blog/soundmsk.html" class="inline-link">作業用BGMと環境音の違い：サウンドマスキングを知る</a></h3>
+          <p>背景音が気になる音の目立ち方にどう関わるか、無理のない音量で確かめる方法を紹介します。</p>
+        </article>
+        <article>
+          <h3><a href="/blog/colornoi.html" class="inline-link">ホワイト・ピンク・ブラウンノイズの違いと選び方</a></h3>
+          <p>周波数バランスによる聞こえ方の違いと、ノイズを比べるときの手順をまとめています。</p>
+        </article>
+        <article>
+          <h3><a href="/blog/coderMix.html" class="inline-link">コーディングに向く環境音ブレンド：作業別の5つの試し方</a></h3>
+          <p>コードを読む・書くなど作業の状態に合わせ、音をひとつずつ試すレシピを紹介します。</p>
+        </article>
+        <article>
+          <h3><a href="/blog/cafesnd1.html" class="inline-link">カフェ音や雨音は作業にどう役立つ？音量と環境の整え方</a></h3>
+          <p>カフェ音や雨音を使う際の個人差、音量調整、比較のポイントを説明します。</p>
+        </article>
+        <article>
+          <h3><a href="/blog/deskflow.html" class="inline-link">ポモドーロタイマーと休憩で整えるデスクワーク習慣</a></h3>
+          <p>作業の準備、画面から離れる休憩、通知を見直す小さな習慣を提案します。</p>
+        </article>
+        <p>記事一覧は<a href="/blog/" class="inline-link">Focus Mixer 開発ブログ</a>でご覧いただけます。</p>
       </section>
     </main>
 
@@ -292,7 +369,7 @@
   <footer>
     <nav class="footer-nav">
       <a href="https://focusmixer.com/jp/" class="link-btn">Home</a>
-      <a href="/jp/about/" class="link-btn">About</a>
+      <a href="#about" class="link-btn">About</a>
       <a href="#howto" class="link-btn">使い方</a>
       <a href="/jp/privacy-policy/" class="link-btn">Privacy Policy</a>
       <a href="/news/index.html" class="link-btn">News</a>
