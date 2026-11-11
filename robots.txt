@@ -3,5 +3,4 @@ Allow: /
 
 Sitemap: https://focusmixer.com/sitemap.xml
 
-Allow: /privacy-policy
-Allow: /jp/privacy-policy
+Disallow: /cdn-cgi/
